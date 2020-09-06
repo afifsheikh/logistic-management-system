@@ -1,3 +1,10 @@
+<?php
+session_start();
+include("config.php");
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,7 +99,7 @@
                                             </ul>
                                         </li>
 
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="login.php">Login</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -207,16 +214,16 @@
         <!-- End Quotation Area -->
         <!-- Start Pricing Area -->
         <div class="col-lg-12 login-form">
-            <form action="/examples/actions/confirmation.php" method="post">
+            <form action="./loginscript.php" method="POST">
                 <h2 class="text-center">Log in</h2>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" required="required">
+                    <input type="text" class="form-control" placeholder="Username" required="required" name="username">
                 </div>
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Tracking id" required="required">
+                    <input type="text" class="form-control" placeholder="Tracking id" required="required" name="hash">
                 </div>
                 <div class="form-group">
-                    <a href="graph.html" type="submit" class="btn btn-primary btn-block">Log in</a>
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
                 </div>
                 <div class="clearfix">
                     <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>
