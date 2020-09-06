@@ -207,69 +207,69 @@
         <!-- End Quotation Area -->
         <!-- Start Pricing Area -->
         <div class="col-lg-12 login-form">
-            <form action="/examples/actions/confirmation.php" method="post">
+            <form action="registrationscript.php" method="POST">
                 <h2 class="text-center">Registration</h2>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="name" required="required">
+                    <input type="text" class="form-control" placeholder="Name" required="required" name="username">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Address" required="required">
+                    <input type="text" class="form-control" placeholder="Address" required="required" name="address">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="CNIC" required="required">
+                    <input type="number" class="form-control" placeholder="CNIC" required="required" name="cnic">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Contact Number" required="required">
+                    <input type="number" class="form-control" placeholder="Contact Number" required="required" name="cno">
                 </div>
                 <div class="form-group">
-                    <select class="custom-select" onchange="roleSelect(this)" id="role">
+                    <select class="custom-select" onchange="roleSelect(this)" id="role" name="role" required="required">
                         <option value="" selected>Choose Role</option>
                         <option value="sender">Sender</option>
-                        <option value="reciever">Reciever</option>
+                        <option value="receiver">Receiver</option>
                     </select>
                 </div>
                 <div id="sender-form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Package" required="required">
-                    </div>
+                    <!-- <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Package"  >
+                    </div> -->
 
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Quantity" required="required">
+                        <input type="number" class="form-control" placeholder="Quantity" name="qty" >
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Length" required="required">
+                        <input type="number" class="form-control" placeholder="Length in cm" name="len" >
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Weight" required="required">
+                        <input type="number" class="form-control" placeholder="Weight in kgs" name="wei" >
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Height" required="required">
-
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Width" required="required">
+                        <input type="number" class="form-control" placeholder="Height in cm" name="hei">
 
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Description" required="required">
+                        <input type="number" class="form-control" placeholder="Width in cm" name="wid"  >
 
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Sender Location" required="required">
+                        <input type="text" class="form-control" placeholder="Description" name="desc"  >
 
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Reciever Location" required="required">
+                        <input type="text" class="form-control" placeholder="Sender Location"   name="sloc">
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Reciever Location"   name="rloc">
 
                     </div>
                 </div>
                 <div class="form-group">
-                    <a href="graph.html" type="submit" class="btn btn-primary btn-block">Register Me</a>
+                    <button type="submit" class="btn btn-primary btn-block">Register Me</button>
                 </div>
 
             </form>
-            <p class="text-center"><a href="login.html">Already have a account? <b>Login</b></a></p>
+            <p class="text-center"><a href="login.php">Already have a account? <b>Login</b></a></p>
         </div>
         <!-- Start Services Area -->
         <!-- Start Footer Area -->
@@ -405,11 +405,11 @@
                     $('#sender-form').show();
                 }
                 else {
-                    $('#sender-form').hide();
+                    $('#sender-form').hide().prop('required',false);
                 }
             }
             else {
-                $('#sender-form').hide();
+                $('#sender-form').hide().prop('required',false);
 
             }
 
