@@ -17,21 +17,21 @@
 <div class="login">
 
 <div class="login-content">
-<form action="index.html" method="POST" name="login_form">
+<form action="loginscript.php" method="POST" name="login_form">
 <h1 class="text-center">Sign In</h1>
 <div class="text-muted text-center mb-4">
 For your protection, please verify your identity.
 </div>
 <div class="form-group">
-<label>Email Address</label>
-<input type="text" class="form-control form-control-lg fs-15px" value="" placeholder="username@address.com" />
+<label>Username</label>
+<input type="text" class="form-control form-control-lg fs-15px" value="" placeholder="username" name="username" required="required"/>
 </div>
 <div class="form-group">
 <div class="d-flex">
 <label>Password</label>
 <a href="#" class="ml-auto text-muted">Forgot password?</a>
 </div>
-<input type="password" class="form-control form-control-lg fs-15px" value="" placeholder="Enter your password" />
+<input type="password" class="form-control form-control-lg fs-15px" value="" placeholder="Enter your password" name="hash" required="required"/>
 </div>
 <div class="form-group">
 <div class="custom-control custom-checkbox">

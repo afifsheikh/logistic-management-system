@@ -17,57 +17,30 @@
 <div class="register">
 
 <div class="register-content">
-<form action="index.html" method="POST" name="register_form">
+<form action="registrationscript.php" method="POST" name="register_form">
 <h1 class="text-center">Sign Up</h1>
 <p class="text-muted text-center">One Admin ID is all you need to access all the Admin services.</p>
 <div class="form-group">
 <label>Name <span class="text-danger">*</span></label>
-<input type="text" class="form-control form-control-lg fs-15px" placeholder="e.g John Smith" value="" />
+<input type="text" class="form-control form-control-lg fs-15px" placeholder="e.g John Smith" value="" name="username"/>
 </div>
 <div class="form-group">
 <label>Email Address <span class="text-danger">*</span></label>
 <input type="text" class="form-control form-control-lg fs-15px" placeholder="username@address.com" value="" />
 </div>
 <div class="form-group">
-<label>Password <span class="text-danger">*</span></label>
-<input type="password" class="form-control form-control-lg fs-15px" value="" />
+<label>Cnic <span class="text-danger">*</span></label>
+<input type="number" class="form-control form-control-lg fs-15px" value="" name="cnic"/>
 </div>
 <div class="form-group">
-<label>Confirm Password <span class="text-danger">*</span></label>
-<input type="password" class="form-control form-control-lg fs-15px" value="" />
+<label>Contact No <span class="text-danger">*</span></label>
+<input type="number" class="form-control form-control-lg fs-15px" value="" name="cno"/>
 </div>
 <div class="form-group">
-<label>Country <span class="text-danger">*</span></label>
-<select class="form-control form-control-lg fs-15px">
-<option>United States</option>
-</select>
+<label>Address<span class="text-danger">*</span></label>
+<input type="text" class="form-control form-control-lg fs-15px" value="" name="address"/>
 </div>
-<div class="form-group">
-<label>Gender <span class="text-danger">*</span></label>
-<select class="form-control form-control-lg fs-15px">
-<option>Female</option>
-</select>
-</div>
-<div class="form-group">
-<label>Date of Birth <span class="text-danger">*</span></label>
-<div class="row">
-<div class="col-6">
-<select class="form-control form-control-lg fs-15px">
-<option>Month</option>
-</select>
-</div>
-<div class="col-3">
-<select class="form-control form-control-lg fs-15px">
-<option>Day</option>
-</select>
-</div>
-<div class="col-3">
-<select class="form-control form-control-lg fs-15px">
-<option>Year</option>
-</select>
-</div>
-</div>
-</div>
+
 <div class="form-group">
 <div class="custom-control custom-checkbox">
 <input class="custom-control-input" type="checkbox" value="" id="customCheck1" />
@@ -78,7 +51,7 @@
 <button type="submit" class="btn btn-primary btn-lg fs-15px fw-500 btn-block">Sign Up</button>
 </div>
 <div class="text-muted text-center">
-Already have an Admin ID? <a href="page_login.html">Sign In</a>
+Already have an Admin ID? <a href="page_login.php">Sign In</a>
 </div>
 </form>
 </div>
