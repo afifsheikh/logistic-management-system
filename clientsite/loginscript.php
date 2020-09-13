@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 include("config.php");
 
 //get form user and pass value from login.php
@@ -28,6 +28,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
        echo "<script type=\"text/javascript\">".
        "alert('success');".
        "</script>";
+        $_SESSION['username'] = $user;
         header("location:graph.html");
        }
        else{
