@@ -21,11 +21,14 @@ if(!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !em
     $sql = "INSERT INTO user (`u_id`, `userName`, `pass`, `role`, `cnic`, `address`, `contactNo`) VALUES (NULL,'".$username."','".$random_string."','".$role."',".$cnic.",'".$address."',".$cno.")";
     
     if ($conn->query($sql) === TRUE) {
-        echo "yaha tk agya";
         echo "<script type=\"text/javascript\">".
-       "alert('success');".
+       "alert('successfully registered);".
        "</script>";
+        
         header("location:login.php");
+        $fp = fopen('trackingId.txt', 'w');
+        fwrite($fp, $random_string);
+        fclose($fp);
     } else {
         echo '<script language="javascript">';
         echo 'alert("registration failed");';

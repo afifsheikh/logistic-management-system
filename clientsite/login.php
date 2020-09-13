@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 include("config.php");
 
 
@@ -46,12 +46,12 @@ include("config.php");
                             <div class="text">Best Courier Services in the World </div>
                         </div>
                         <div class="top-right">
-                            <ul class="list clearfix">
+                            <!-- <ul class="list clearfix">
                                 <li><a href="tel:+369-2900-4800"><span class="icon fa fa-phone-square"></span> (369)
                                         2900 4800</a></li>
                                 <li><a href="mailto:test@test.com"><span class="icon fa fa-envelope"></span>
                                         test@test.com</a></li>
-                            </ul>
+                            </ul> -->
                             <ul class="social-icons">
                                 <li><a href="#"><span class="fab fa-twitter"></span></a></li>
                                 <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
@@ -87,7 +87,7 @@ include("config.php");
                                 <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
                                         <li><a href="index.html">Home</a></li>
-                                        <li class="dropdown"><a href="javascript:void(0)">Pages</a>
+                                        <li class="dropdown"><a href="javascript:void(0)">About Us</a>
                                             <ul>
                                                 <li><a href="about-us.html">About Us</a></li>
                                                 <li><a href="our-team.html">Our Team</a></li>
@@ -107,7 +107,7 @@ include("config.php");
                             <!-- Main Menu End-->
                             <div class="outer-box clearfix">
                                 <!--Search Box-->
-                                <div class="search-box-outer">
+                                <!-- <div class="search-box-outer">
                                     <div class="dropdown">
                                         <button class="search-box-btn dropdown-toggle" type="button" id="dropdownMenu1"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
@@ -128,7 +128,7 @@ include("config.php");
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Button Box -->
                                 <div class="btn-box"> <a href="#quote-popup"
                                         class="theme-btn vendor-btn open-popup-link">Get Quotes</a>
@@ -230,7 +230,7 @@ include("config.php");
                     <a href="#" class="float-right">Forgot Password?</a>
                 </div>
             </form>
-            <p class="text-center"><a href="registeration.html">Create an Account</a></p>
+            <p class="text-center"><a href="registration.php">Create an Account</a></p>
         </div>
         <!-- Start Services Area -->
         <!-- Start Footer Area -->

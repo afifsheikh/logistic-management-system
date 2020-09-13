@@ -1,3 +1,6 @@
+<?php
+session_start();
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,10 +43,9 @@
                         </div>
                         <div class="top-right">
                             <ul class="list clearfix">
-                                <li><a href="tel:+369-2900-4800"><span class="icon fa fa-phone-square"></span> (369)
-                                        2900 4800</a></li>
-                                <li><a href="mailto:test@test.com"><span class="icon fa fa-envelope"></span>
-                                        test@test.com</a></li>
+                                <li><a href="tel:+369-2900-4800"><span class="icon fa fa-phone-square"></span>$_SESSION['username']</a></li>
+                                <!-- <li><a href="mailto:test@test.com"><span class="icon fa fa-envelope"></span>
+                                        test@test.com</a></li> -->
                             </ul>
                             <ul class="social-icons">
                                 <li><a href="#"><span class="fab fa-twitter"></span></a></li>
@@ -413,3 +415,4 @@
 </body>
 
 </html>
+?php>

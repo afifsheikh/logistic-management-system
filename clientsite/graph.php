@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,12 +42,11 @@
                             <div class="text">Best Courier Services in the World </div>
                         </div>
                         <div class="top-right">
-                            <!-- <ul class="list clearfix">
-                                <li><a href="tel:+369-2900-4800"><span class="icon fa fa-phone-square"></span> (369)
-                                        2900 4800</a></li>
-                                <li><a href="mailto:test@test.com"><span class="icon fa fa-envelope"></span>
-                                        test@test.com</a></li>
-                            </ul> -->
+                            <ul class="list clearfix">
+                                <li><a href="tel:+369-2900-4800"><span class="icon fa fa-user"></span><?php echo $_SESSION['username']; ?></a></li>
+                                <!-- <li><a href="mailto:test@test.com"><span class="icon fa fa-envelope"></span>
+                                        test@test.com</a></li> -->
+                            </ul>
                             <ul class="social-icons">
                                 <li><a href="#"><span class="fab fa-twitter"></span></a></li>
                                 <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
@@ -78,22 +80,7 @@
                                             class="icon flaticon-menu"></span> </button>
                                 </div>
                                 <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
-                                    <ul class="navigation clearfix">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li class="dropdown"><a href="javascript:void(0)">Pages</a>
-                                            <ul>
-                                                <li><a href="about-us.html">About Us</a></li>
-                                                <li><a href="our-team.html">Our Team</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a href="javascript:void(0)">Services</a>
-                                            <ul>
-                                                <li><a href="service-details.html">Service Details</a></li>
-                                            </ul>
-                                        </li>
 
-                                        <li><a href="login.php">Login</a></li>
-                                    </ul>
                                 </div>
                             </nav>
                             <!-- Main Menu End-->
@@ -123,8 +110,7 @@
                                     </div>
                                 </div> -->
                                 <!-- Button Box -->
-                                <div class="btn-box"> <a href="#quote-popup"
-                                        class="theme-btn vendor-btn open-popup-link">Get Quotes</a>
+                                <div class="btn-box"> <a href="index.html" class="theme-btn vendor-btn">Log Out</a>
                                 </div>
                             </div>
                         </div>
@@ -189,11 +175,11 @@
         <div class="page-title-area">
             <div class="container">
                 <div class="page-title-content">
-                    <h2>Registration</h2>
+                    <h2>Main Page</h2>
                     <ul>
                         <li> <a href="index.html">Home</a> </li>
                         <li> <i class='ti-angle-right'></i> </li>
-                        <li>Registration</li>
+                        <li>Main Page</li>
                     </ul>
                 </div>
             </div>
@@ -206,70 +192,103 @@
 
         <!-- End Quotation Area -->
         <!-- Start Pricing Area -->
-        <div class="col-lg-12 login-form">
-            <form action="registrationscript.php" method="POST">
-                <h2 class="text-center">Registration</h2>
+        <div class="row">
+            <!--FIRST ROW-->
 
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Name" required="required" name="username">
+            <!--TABLE-->
+
+            <div class=" table-responsive col-xl-6" style="background-color: white;">
+                <h3 style="padding: 30px;">Delivery Status</h2>
+                    <table class="table table-light">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Linked Account</th>
+                                <th scope="col">History</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <th scope="row">3</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">7</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">8</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">9</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">10</th>
+                                <td style="border-radius: 10px;height: 10px;">
+                                    Returned</td>
+                                <td>August 8th, 2020</td>
+                                <td>MobileDev</td>
+                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+
+            <div class="col-xl-6">
+                <!--MAP START-->
+                <!--Google map-->
+                <div id="map-container-google-2" class="z-depth-1-half map-container" style="height: 500px">
+                    <iframe src="https://maps.google.com/maps?q=chicago&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        frameborder="0" style="border:0; height: 100%;width: 100%;" allowfullscreen></iframe>
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Address" required="required" name="address">
-                </div>
-                <div class="form-group">
-                    <input type="number" class="form-control" placeholder="CNIC" required="required" name="cnic">
-                </div>
-                <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Contact Number" required="required" name="cno">
-                </div>
-                <div class="form-group">
-                    <select class="custom-select" onchange="roleSelect(this)" id="role" name="role" required="required">
-                        <option value="" selected>Choose Role</option>
-                        <option value="sender">Sender</option>
-                        <option value="receiver">Receiver</option>
-                    </select>
-                </div>
-                <div id="sender-form">
-                    <!-- <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Package"  >
-                    </div> -->
-
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Quantity" name="qty" >
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Length in cm" name="len" >
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Weight in kgs" name="wei" >
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Height in cm" name="hei">
-
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Width in cm" name="wid"  >
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Description" name="desc"  >
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Sender Location"   name="sloc">
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Reciever Location"   name="rloc">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Register Me</button>
-                </div>
-
-            </form>
-            <p class="text-center"><a href="login.php">Already have a account? <b>Login</b></a></p>
+                <!--Google Maps-->
+            </div>
         </div>
         <!-- Start Services Area -->
         <!-- Start Footer Area -->
@@ -285,7 +304,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="widget">
                                 <div class="footer_logo"> <a href="#"><img src="images/footer-logo.png"
-                                            alt="logo" /></a> </div>
+                                            alt="logo" /></a>
+                                </div>
                                 <p>If you are going to use a passage of Lorem Ipsum you need to be sure there isn't
                                     anything
                                     embarrassing hidden in the middle of text</p>
@@ -305,7 +325,7 @@
                                     <li><a href="services.html">Services</a></li>
                                     <li><a href="blog.html">Blog</a></li>
                                     <li><a href="gallery.html">Gallery</a></li>
-                                    <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="login.html">Login</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -364,8 +384,6 @@
             </div>
         </footer>
     </div>
-
-
     <!-- End Footer Area -->
     <!-- jQuery Min JS -->
     <script src="js/jquery-min.js"></script>
@@ -394,27 +412,6 @@
     <script src="js/venobox.min.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
-    <script>      $(document).ready(function () {
-            $('#sender-form').hide();
-
-        });
-        function roleSelect(element) {
-
-            if (element.value != '') {
-                if (element.value == 'sender') {
-                    $('#sender-form').show();
-                }
-                else {
-                    $('#sender-form').hide().prop('required',false);
-                }
-            }
-            else {
-                $('#sender-form').hide().prop('required',false);
-
-            }
-
-        }
-    </script>
 </body>
 
 </html>

@@ -29,7 +29,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
        "alert('success');".
        "</script>";
         $_SESSION['username'] = $user;
-        header("location:graph.html");
+        header("location:graph.php");
        }
        else{
         echo "login failed";
