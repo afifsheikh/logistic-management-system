@@ -32,7 +32,10 @@ $pass = mysqli_real_escape_string($conn,$pass);
         header("location:graph.php");
        }
        else{
-        echo "login failed";
+         echo '<script language="javascript">';
+         echo 'alert("LOGIN FAILED CHECK USERNAME OR PASSWORD");';
+         echo 'window.location = "login.php"';
+         echo '</script>';
      }
     }else{
         echo '<script language="javascript">';

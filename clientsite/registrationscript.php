@@ -19,16 +19,20 @@ $input_length = strlen($permitted_chars);
 if(!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !empty($role)){
     
     $sql = "INSERT INTO user (`u_id`, `userName`, `pass`, `role`, `cnic`, `address`, `contactNo`) VALUES (NULL,'".$username."','".$random_string."','".$role."',".$cnic.",'".$address."',".$cno.")";
-    
+
     if ($conn->query($sql) === TRUE) {
-        echo "<script type=\"text/javascript\">".
-       "alert('successfully registered);".
-       "</script>";
-        
-        header("location:login.php");
         $fp = fopen('trackingId.txt', 'w');
-        fwrite($fp, $random_string);
+        fwrite($fp, 'You\'re sucessfully register proceed to login '.$username.' : '.$random_string);
+        
+        if(file_exists('trackingId.txt')){
+            $file_url = './trackingId.txt';
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary"); 
+        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+        readfile($file_url);
         fclose($fp);
+        }
+        
     } else {
         echo '<script language="javascript">';
         echo 'alert("registration failed");';

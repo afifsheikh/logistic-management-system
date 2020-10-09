@@ -207,7 +207,7 @@
         <!-- End Quotation Area -->
         <!-- Start Pricing Area -->
         <div class="col-lg-12 login-form">
-            <form action="registrationscript.php" method="POST">
+            <form action="registrationscript.php" method="POST"  name="login-form">
                 <h2 class="text-center">Registration</h2>
 
                 <div class="form-group">
@@ -265,7 +265,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Register Me</button>
+                    <button type="submit"  class="btn btn-primary btn-block" onclick="submitForm()">Register Me</button>
+                    
                 </div>
 
             </form>
@@ -414,6 +415,16 @@
             }
 
         }
+        function submitForm() {
+   // Get the first form with the name
+   // Usually the form name is not repeated
+   // but duplicate names are possible in HTML
+   // Therefore to work around the issue, enforce the correct index
+   var frm = document.getElementsByName('login-form')[0];
+   frm.submit(); // Submit the form
+   frm.reset();  // Reset all form data
+   return false; // Prevent page refresh
+}
     </script>
 </body>
 

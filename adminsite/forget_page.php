@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Transcrew | Login</title>
+<title>Transcrew | forget password</title>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
@@ -18,31 +18,28 @@
 
 <div class="login-content">
 <form action="loginscript.php" method="POST" name="login_form">
-<h1 class="text-center">Sign In</h1>
+<h1 class="text-center">Forget your Password?</h1>
 <div class="text-muted text-center mb-4">
-For your protection, please verify your identity.
+Don't worry, For any query Call our Helpline 111-412-421
 </div>
 <div class="form-group">
 <label>Username</label>
-<input type="text" class="form-control form-control-lg fs-15px" value="" placeholder="username" name="username" required="required"/>
+<input type="text" class="form-control form-control-lg fs-15px" value="" placeholder="Enter username" name="username" required="required"/>
 </div>
 <div class="form-group">
 <div class="d-flex">
-<label>Password</label>
-<a href="forget_page.php" class="ml-auto text-muted">Forgot password?</a>
+<label>Cnic No </label>
 </div>
-<input type="password" class="form-control form-control-lg fs-15px" value="" placeholder="password" name="hash" required="required"/>
+<input type="password" class="form-control form-control-lg fs-15px" value="" placeholder="Enter your cnic no" name="hash" required="required"/>
 </div>
 <div class="form-group">
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" value="" id="customCheck1" />
-<label class="custom-control-label fw-500" for="customCheck1">Remember me</label>
+<div class="d-flex">
+<label>New Password</label>
 </div>
+<input type="password" class="form-control form-control-lg fs-15px" value="" placeholder="Enter your new password" name="hash" required="required"/>
+
 </div>
-<button type="submit" class="btn btn-primary btn-lg btn-block fw-500 mb-3">Sign In</button>
-<div class="text-center text-muted">
-Don't have an account yet? <a href="page_register.php">Sign up</a>.
-</div>
+<button type="submit" class="btn btn-primary btn-lg btn-block fw-500 mb-3">Update</button>
 </form>
 </div>
 

@@ -29,7 +29,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
        echo "<script type=\"text/javascript\">".
        "alert('success');".
        "</script>";
-        header("location:index.html");
+        header("location:index.php");
        }
        else{
          echo '<script language="javascript">';

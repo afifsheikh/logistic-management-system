@@ -1,9 +1,12 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="utf-8" />
-	<title>Studio | Home</title>
+	<title>Transcrew | Home</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -34,7 +37,7 @@
 					</button>
 				</div>
 				<a href="#" class="brand-logo">
-					<img src="assets/img/logo.png" height="20px" />
+					<img src="assets/img/logo1.png" height="20px" />
 				</a>
 			</div>
 
@@ -46,7 +49,7 @@
 						<input type="text" class="form-control" placeholder="Search menu..." />
 					</div>
 				</form>
-				<div class="menu-item dropdown">
+				<!-- <div class="menu-item dropdown">
 					<a href="#" data-toggle="dropdown" data-display="static" class="menu-link">
 						<div class="menu-icon"><i class="fa fa-bell nav-icon"></i></div>
 						<div class="menu-label">3</div>
@@ -105,14 +108,14 @@
 							<a href="#" class="text-gray-800 text-decoration-none">See all</a>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="menu-item dropdown">
 					<a href="#" data-toggle="dropdown" data-display="static" class="menu-link">
 						<div class="menu-img online">
 							<img src="assets/img/user/user.jpg" alt="" class="mw-100 mh-100 rounded-circle" />
 						</div>
 						<div class="menu-text"><span class="__cf_email__"
-								data-cfemail="3d4e585c5349555850587d5a505c5451135e5250">[email&#160;protected]</span>
+								data-cfemail="3d4e585c5349555850587d5a505c5451135e5250"><?php echo $_SESSION['username']; ?></span>
 						</div>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right mr-lg-3">
@@ -125,7 +128,7 @@
 						<a class="dropdown-item d-flex align-items-center" href="#">Setting <i
 								class="fa fa-wrench fa-fw ml-auto text-gray-400 f-s-16"></i></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item d-flex align-items-center" href="#">Log Out <i
+						<a class="dropdown-item d-flex align-items-center" href="page_login.php">Log Out <i
 								class="fa fa-toggle-off fa-fw ml-auto text-gray-400 f-s-16"></i></a>
 					</div>
 				</div>
@@ -139,26 +142,26 @@
 			<div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
 
 				<div class="menu">
-					<div class="menu-header">Navigation</div>
+					<div class="menu-header">Menu</div>
 					<!-- <div class="menu-item">
-						<a href="index.html" class="menu-link">
+						<a href="index.php" class="menu-link">
 							<span class="menu-icon"><i class="fa fa-laptop"></i></span>
 							<span class="menu-text">Tracker</span>
 						</a>
 					</div> -->
 					<div class="menu-item active">
-						<a href="index.html" class="menu-link">
+						<a href="index.php" class="menu-link">
 							<span class="menu-icon"><i class="fa fa-map"></i></span>
 							<span class="menu-text">Tracker</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="analytics.html" class="menu-link">
+						<a href="analytics.php" class="menu-link">
 							<span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
 							<span class="menu-text">Analytics</span>
 						</a>
 					</div>
-					<div class="menu-item has-sub">
+					<!-- <div class="menu-item has-sub">
 						<a href="#" class="menu-link">
 							<span class="menu-icon">
 								<i class="fa fa-envelope"></i>
@@ -184,10 +187,10 @@
 								</a>
 							</div>
 						</div>
-					</div>
-					<div class="menu-divider"></div>
-					<div class="menu-header">Components</div>
-					<div class="menu-item">
+					</div> -->
+					<!-- <div class="menu-divider"></div>
+					<div class="menu-header">Components</div> -->
+					<!-- <div class="menu-item">
 						<a href="widgets.html" class="menu-link">
 							<span class="menu-icon"><i class="fa fa-qrcode"></i></span>
 							<span class="menu-text">Widgets</span>
@@ -343,7 +346,7 @@
 								</a>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="menu-item has-sub">
 						<a href="#" class="menu-link">
 							<span class="menu-icon"><i class="fa fa-globe"></i></span>
@@ -351,7 +354,7 @@
 							<span class="menu-caret"><b class="caret"></b></span>
 						</a>
 						<div class="menu-submenu">
-							<div class="menu-item">
+							<!-- <div class="menu-item">
 								<a href="page_gallery.html" class="menu-link">
 									<span class="menu-text">Gallery</span>
 								</a>
@@ -370,20 +373,25 @@
 								<a href="page_404_error.html" class="menu-link">
 									<span class="menu-text">404 Error Page</span>
 								</a>
-							</div>
+							</div> -->
 							<div class="menu-item">
-								<a href="page_login.html" class="menu-link">
+								<a href="page_login.php" class="menu-link">
 									<span class="menu-text">Login</span>
 								</a>
 							</div>
 							<div class="menu-item">
-								<a href="page_register.html" class="menu-link">
+								<a href="page_register.php" class="menu-link">
 									<span class="menu-text">Register</span>
+								</a>
+                            </div>
+                            <div class="menu-item">
+								<a href="index.php" class="menu-link">
+									<span class="menu-text">Dashboard</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div class="menu-divider"></div>
+					<!-- <div class="menu-divider"></div>
 					<div class="menu-header">Users</div>
 					<div class="menu-item">
 						<a href="profile.html" class="menu-link">
@@ -408,13 +416,13 @@
 							<span class="menu-icon"><i class="fa fa-question-circle"></i></span>
 							<span class="menu-text">Helper</span>
 						</a>
-					</div>
-					<div class="p-3 px-4 mt-auto hide-on-minified">
-						<a href="https://seantheme.com/studio/documentation/index.html"
+					</div> -->
+					<!-- <div class="p-3 px-4 mt-auto hide-on-minified">
+						<a href="https://seantheme.com/studio/documentation/index.php"
 							class="btn btn-block btn-secondary font-weight-600 rounded-pill">
 							<i class="fa fa-code-branch mr-1 ml-n1 opacity-5"></i> Documentation
 						</a>
-					</div>
+					</div> -->
 				</div>
 
 			</div>
@@ -427,7 +435,7 @@
 
 		<div id="content" class="app-content">
 			<h1 class="page-header mb-3">
-				My FYP <small>here's my final year project.</small>
+				Transcrew <small>Courier & Delivery Service.</small>
 			</h1>
 
 
