@@ -256,6 +256,9 @@
 
                     </div>
                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Receiver tracking id" name="rti" required="required">
+                    </div>
+                    <div class="form-group">
                         <input type="text" class="form-control" placeholder="Sender Location"   name="sloc">
 
                     </div>
