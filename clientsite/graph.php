@@ -1,6 +1,52 @@
 <?php
 session_start();
+$page = $_SERVER['PHP_SELF'];
+$sec = "5";
+
+// $file_handle = fopen("ct.txt", "r");
+
+// //while (!feof($file_handle) ) {
+
+//    $line_of_text = fgets($file_handle);
+//    $parts = explode(',', trim($line_of_text) );
+//     //echo $parts;
+//    $data = implode(",",$parts);
+//    echo $data;
+// //}
+// $_SESSION['lat_long'] = $data;
+// fclose($file_handle);
+$line = '';
+
+$f = fopen('ct.txt', 'r');
+$cursor = -1;
+
+fseek($f, $cursor, SEEK_END);
+$char = fgetc($f);
+
+/**
+ * Trim trailing newline chars of the file
+ */
+while ($char === "\n" || $char === "\r") {
+    fseek($f, $cursor--, SEEK_END);
+    $char = fgetc($f);
+}
+
+/**
+ * Read until the start of file or first newline char
+ */
+while ($char !== false && $char !== "\n" && $char !== "\r") {
+    /**
+     * Prepend the new char
+     */
+    $line = $char . $line;
+    fseek($f, $cursor--, SEEK_END);
+    $char = fgetc($f);
+}
+$_SESSION['lat_long'] = $line;
+echo $line;
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +54,7 @@ session_start();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Transcrew | Courier & Delivery Service HTML Template</title>
     <meta name="description" content="Transcrew | Courier & Delivery Service HTML Template" />
@@ -284,7 +331,7 @@ session_start();
                 <!--MAP START-->
                 <!--Google map-->
                 <div id="map-container-google-2" class="z-depth-1-half map-container" style="height: 500px">
-                    <iframe src="https://maps.google.com/maps?q=chicago&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    <iframe src="https://maps.google.com/maps?q=<?php echo $_SESSION['lat_long']; ?>&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         frameborder="0" style="border:0; height: 100%;width: 100%;" allowfullscreen></iframe>
                 </div>
                 <!--Google Maps-->
@@ -415,3 +462,4 @@ session_start();
 </body>
 
 </html>
+
