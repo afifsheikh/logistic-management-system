@@ -14,7 +14,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
  if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // $myusername = mysqli_real_escape_string($conn,$_POST['username']);
-    $sql = "SELECT * FROM User WHERE userName = '$user'";
+    $sql = "SELECT * FROM user WHERE userName = '$user'";
     $result = mysqli_query($conn,$sql);
     if (!$result) {
        printf("Error: %s\n", mysqli_error($conn));
@@ -29,6 +29,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
        "alert('success');".
        "</script>";
         $_SESSION['username'] = $user;
+        $_SESSION['u_id'] = $row['u_id'];
         header("location:graph.php");
        }
        else{

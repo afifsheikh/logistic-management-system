@@ -1,20 +1,10 @@
 <?php
 session_start();
+include("config.php");
+
 $page = $_SERVER['PHP_SELF'];
-$sec = "5";
+$sec = "60";
 
-// $file_handle = fopen("ct.txt", "r");
-
-// //while (!feof($file_handle) ) {
-
-//    $line_of_text = fgets($file_handle);
-//    $parts = explode(',', trim($line_of_text) );
-//     //echo $parts;
-//    $data = implode(",",$parts);
-//    echo $data;
-// //}
-// $_SESSION['lat_long'] = $data;
-// fclose($file_handle);
 $line = '';
 
 $f = fopen('ct.txt', 'r');
@@ -43,7 +33,7 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
     $char = fgetc($f);
 }
 $_SESSION['lat_long'] = $line;
-echo $line;
+//echo $line;
 ?>
 
 
@@ -54,7 +44,7 @@ echo $line;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
+    <!-- <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'"> -->
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Transcrew | Courier & Delivery Service HTML Template</title>
     <meta name="description" content="Transcrew | Courier & Delivery Service HTML Template" />
@@ -244,6 +234,18 @@ echo $line;
 
             <!--TABLE-->
 
+<?PHP
+$un = $_SESSION['username'];
+
+$tableQueryOnUser="SELECT * FROM user u inner join package p WHERE p.u_id = u.u_id and u.userName = '$un' ";
+
+
+$res = mysqli_query($conn, $tableQueryOnUser);
+//$rows = mysqli_fetch_array($res);
+$count = mysqli_num_rows($res);
+//$rows = mysqli_fetch_array($res); 
+
+?>
             <div class=" table-responsive col-xl-6" style="background-color: white;">
                 <h3 style="padding: 30px;">Delivery Status</h2>
                     <table class="table table-light">
@@ -257,71 +259,27 @@ echo $line;
                             </tr>
                         </thead>
                         <tbody>
+                      
+                      <?php
+                      if ($res->num_rows > 0) {
+                        // output data of each row
+                        while($row = $res->fetch_assoc()) {   
+                      
+                      ?>
 
                             <tr>
-                                <th scope="row">3</th>
                                 <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
+                               <?php echo $row['qty']; ?></td>
+                                <td> <?php echo $row['hash']; ?></td>
+                                <td> <?php echo $row['u_id']; ?></td>
                             </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td style="border-radius: 10px;height: 10px;">
-                                    Returned</td>
-                                <td>August 8th, 2020</td>
-                                <td>MobileDev</td>
-                                <td><a>ersad7667r5r8d8asd90a</a></td>
-                            </tr>
+                            <?php
+                        }
+                    }else{
+                        echo 'no data';
+                    }
+                            ?>
+                             
                         </tbody>
                     </table>
             </div>

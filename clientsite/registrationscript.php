@@ -28,35 +28,7 @@ $input_length = strlen($permitted_chars);
     $rloc = $_POST['rloc'];
     $flag = true;
 
-    if(!empty($rti)){
-
-        $sqluser = "SELECT * FROM user WHERE `pass` = '".$rti."' ";
-        $result = $conn->query($sqluser);
-
-        if ($result->num_rows > 0) {
-        // output data of each row
-            while($row = $result->fetch_assoc()) {
-               // echo "id: " . $row["u_id"]. " - Name: " . $row["pass"]. " " . $row["userName"]. "<br>";
-            }
-
-            $pkgsql = "INSERT INTO package (`p_id`, `qty`, `length`, `width`, `height`, `weight`, `desc`, `hash`, `send_loc`, `rec_loc`) VALUES (NULL,".$qty.",".$len.",".$wid.",".$hei.",".$wei.",'".$desc."','".$rti."','".$sloc."','".$rloc."')";
-            if($role="sender"){
-                $conn->query($pkgsql);
-            }
-            $flag = true;
-        }
-        else
-        {
-        // echo '<script language="javascript">';
-        // echo 'alert("User Tracking not found);';
-        // //echo 'window.location = "login.php"';
-        // echo '</script>';
-        $flag = false;
-
-        }
-
-       
-    }
+   
 
 
 if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !empty($role)) && $flag){
@@ -77,9 +49,57 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
         readfile($file_url);
         fclose($fp);
         }
+        if(!empty($rti)){
+
+            $sqluser = "SELECT * FROM user WHERE `pass` = '".$rti."' ";
+            $result = $conn->query($sqluser);
+            
+            $sqlUserName = "SELECT * FROM user WHERE userName = '$username'";
+            $res = mysqli_query($conn, $sqlUserName);
+            $row1 = mysqli_fetch_array($res);
+            $u_id = $row1['u_id'];
+            //echo $u_id;
+            if ($result->num_rows > 0) {
+            // output data of each row
+                // while($row = $result->fetch_assoc()) {
+                //    // echo "id: " . $row["u_id"]. " - Name: " . $row["pass"]. " " . $row["userName"]. "<br>";
+                // }
+    
+                $pkgsql = "INSERT INTO package (`p_id`, `u_id`, `qty`, `length`, `width`, `height`, `weight`, `desc`, `hash`, `send_loc`, `rec_loc`) VALUES (NULL,".$u_id.",".$qty.",".$len.",".$wid.",".$hei.",".$wei.",'".$desc."','".$rti."','".$sloc."','".$rloc."')";
+                if($role="sender"){
+                    $conn->query($pkgsql);
+
+                    //get package id
+                    $sqlPkg = "SELECT * FROM package WHERE `u_id` = '".$u_id."' ";
+                    $getPkg_ID = mysqli_query($conn, $sqlPkg);
+                    $pkgData = mysqli_fetch_array($getPkg_ID);
+                    $p_id = $pkgData['p_id'];
+                    
+                    date_default_timezone_set('Asia/Karachi');
+                    $currentDateTime=date('d/m/Y H:i:s');
+                    // $newDateTime = date('h:i A', strtotime($currentDateTime));
+                    
+                    $sqlStatus = "INSERT INTO p_status (`s_id`,`timestamp`,`status`,`p_id`,`u_id`,`hash`) VALUES (NULL,'".$currentDateTime."','on going','".$p_id."','".$u_id."','".$rti."')";
+                    $conn->query($sqlStatus);
+                        
+                      
+                }
+                $flag = true;
+            }
+            else
+            {
+            // echo '<script language="javascript">';
+            // echo 'alert("User Tracking not found);';
+            // //echo 'window.location = "login.php"';
+            // echo '</script>';
+            $flag = false;
+    
+            }
+    
+           
+        }
         
     }
-    
     
     else {
         echo '<script language="javascript">';
