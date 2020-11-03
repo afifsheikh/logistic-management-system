@@ -53,6 +53,7 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
 
             $sqluser = "SELECT * FROM user WHERE `pass` = '".$rti."' ";
             $result = $conn->query($sqluser);
+
             
             $sqlUserName = "SELECT * FROM user WHERE userName = '$username'";
             $res = mysqli_query($conn, $sqlUserName);
@@ -60,12 +61,17 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
             $u_id = $row1['u_id'];
             //echo $u_id;
             if ($result->num_rows > 0) {
+                $row = mysqli_fetch_array($result);
+                    $rec_id = $row['u_id'];
+                
+                
+
             // output data of each row
                 // while($row = $result->fetch_assoc()) {
                 //    // echo "id: " . $row["u_id"]. " - Name: " . $row["pass"]. " " . $row["userName"]. "<br>";
                 // }
     
-                $pkgsql = "INSERT INTO package (`p_id`, `u_id`, `qty`, `length`, `width`, `height`, `weight`, `desc`, `hash`, `send_loc`, `rec_loc`) VALUES (NULL,".$u_id.",".$qty.",".$len.",".$wid.",".$hei.",".$wei.",'".$desc."','".$rti."','".$sloc."','".$rloc."')";
+                $pkgsql = "INSERT INTO package (`p_id`, `u_id`, `rec_id`, `qty`, `length`, `width`, `height`, `weight`, `desc`, `hash`, `send_loc`, `rec_loc`) VALUES (NULL,".$u_id.",".$rec_id.",".$qty.",".$len.",".$wid.",".$hei.",".$wei.",'".$desc."','".$rti."','".$sloc."','".$rloc."')";
                 if($role="sender"){
                     $conn->query($pkgsql);
 

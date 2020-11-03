@@ -1,9 +1,25 @@
 <?php
 session_start();
+
 include("config.php");
 
+$_SESSION['sec'] = "10";
+
+if(isset($_POST["return"])) {
+    
+    $_SESSION['sec'] = "5";
+}
+
+
+if(isset($_POST["accept"])) {
+    $_SESSION['sec'] = "100000";
+}
+
+
 $page = $_SERVER['PHP_SELF'];
-$sec = "60";
+
+
+
 
 $line = '';
 
@@ -33,7 +49,14 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
     $char = fgetc($f);
 }
 $_SESSION['lat_long'] = $line;
-//echo $line;
+
+
+// echo $line."<br>";
+$lat = substr( $line,0,9);
+$lon = substr( $line,10,9);
+
+
+
 ?>
 
 
@@ -44,7 +67,7 @@ $_SESSION['lat_long'] = $line;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'"> -->
+    <meta http-equiv="refresh" content="<?php echo $_SESSION['sec']?>;URL='<?php echo $page?>'">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Transcrew | Courier & Delivery Service HTML Template</title>
     <meta name="description" content="Transcrew | Courier & Delivery Service HTML Template" />
@@ -237,48 +260,88 @@ $_SESSION['lat_long'] = $line;
 <?PHP
 $un = $_SESSION['username'];
 
-$tableQueryOnUser="SELECT * FROM user u inner join package p WHERE p.u_id = u.u_id and u.userName = '$un' ";
-
+$tableQueryOnUser="SELECT * FROM user u inner join package p on p.u_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
 
 $res = mysqli_query($conn, $tableQueryOnUser);
-//$rows = mysqli_fetch_array($res);
 $count = mysqli_num_rows($res);
-//$rows = mysqli_fetch_array($res); 
+while($row = $res->fetch_assoc()) {   
+  $desc =   $row['desc']; 
+  $qty = $row['qty'];
+  $status = $row['status']; 
+     $timestamp = $row['timestamp']; 
+     
+}
+// if(isset($_POST["return"])) {
+    
+    //$GLOBALS['sec']="10";
+    //$sec = "10";
+   // echo "return";
+    $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
+            $res = mysqli_query($conn, $sqlUserName);
+            $row1 = mysqli_fetch_array($res);
+            $u_id = $row1['u_id'];
 
+$sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon." WHERE `u_id` = ".$u_id." ";
+$conn->query($sqlStatus);
+//  }
+
+// if(isset($_POST["accept"])) { 
+//     //$sec = "0";
+//     $GLOBALS['sec'] = "0";
+//     echo "accept";
+// $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
+//             $res = mysqli_query($conn, $sqlUserName);
+//             $row1 = mysqli_fetch_array($res);
+//             $u_id = $row1['u_id'];
+
+// $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon." WHERE `u_id` = ".$u_id." ";
+// $conn->query($sqlStatus);
+
+//  }
 ?>
             <div class=" table-responsive col-xl-6" style="background-color: white;">
-                <h3 style="padding: 30px;">Delivery Status</h2>
+                
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div  class="col-6">
+                                <h2 style="padding: 30px;">Delivery Status</h2>
+                            </div>
+                            <div  class="col-6 text-center mt-4">
+                                <form method="POST">
+                                    <button class="btn btn-success" name="accept" onclick="accept()">Accept</button>
+                                    <button class="btn btn-danger" name="return" onclick="return1()">Return</button>
+                                </form>
+                               
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-light">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Qty</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Linked Account</th>
-                                <th scope="col">History</th>
+                                <th scope="col">Latitude</th>
+                                <th scope="col">Longitude</th>
                             </tr>
                         </thead>
                         <tbody>
                       
-                      <?php
-                      if ($res->num_rows > 0) {
-                        // output data of each row
-                        while($row = $res->fetch_assoc()) {   
                       
-                      ?>
 
                             <tr>
                                 <td style="border-radius: 10px;height: 10px;">
-                               <?php echo $row['qty']; ?></td>
-                                <td> <?php echo $row['hash']; ?></td>
-                                <td> <?php echo $row['u_id']; ?></td>
+                               <?php echo $desc ?></td>
+                                <td> <?php echo $qty ?></td>
+                                <td> <?php echo $status ?></td>
+                                <td> <?php echo $timestamp ?></td>
+                                <td> <?php echo $lat ?></td>
+                                <td> <?php echo $lon ?></td>
+                                
+                                
                             </tr>
-                            <?php
-                        }
-                    }else{
-                        echo 'no data';
-                    }
-                            ?>
+                          
                              
                         </tbody>
                     </table>
