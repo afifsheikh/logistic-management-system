@@ -5,15 +5,7 @@ include("config.php");
 
 $_SESSION['sec'] = "10";
 
-if(isset($_POST["return"])) {
-    
-    $_SESSION['sec'] = "5";
-}
 
-
-if(isset($_POST["accept"])) {
-    $_SESSION['sec'] = "100000";
-}
 
 
 $page = $_SERVER['PHP_SELF'];
@@ -55,7 +47,32 @@ $_SESSION['lat_long'] = $line;
 $lat = substr( $line,0,9);
 $lon = substr( $line,10,9);
 
+if(isset($_POST["return"])) {
+    
+    $_SESSION['sec'] = "5";
+    $un = $_SESSION['username'];
+    $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
+    $res = mysqli_query($conn, $sqlUserName);
+    $row1 = mysqli_fetch_array($res);
+    $u_id = $row1['u_id'];
 
+    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status`='returning' WHERE `u_id` = ".$u_id." ";
+    $conn->query($sqlStatus);
+}
+
+
+if(isset($_POST["accept"])) {
+    $_SESSION['sec'] = "100000";
+    $un = $_SESSION['username'];
+    $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
+    $res = mysqli_query($conn, $sqlUserName);
+    $row1 = mysqli_fetch_array($res);
+    $u_id = $row1['u_id'];
+
+    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status`='accepted' WHERE `u_id` = ".$u_id." ";
+    $conn->query($sqlStatus);
+
+}
 
 ?>
 
@@ -171,6 +188,10 @@ $lon = substr( $line,10,9);
                                 </div> -->
                                 <!-- Button Box -->
                                 <div class="btn-box"> <a href="index.html" class="theme-btn vendor-btn">Log Out</a>
+                                <? 
+                                    session_unset();
+                                    session_destroy();
+                                ?>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +290,6 @@ while($row = $res->fetch_assoc()) {
   $qty = $row['qty'];
   $status = $row['status']; 
      $timestamp = $row['timestamp']; 
-     
 }
 // if(isset($_POST["return"])) {
     
@@ -327,9 +347,6 @@ $conn->query($sqlStatus);
                             </tr>
                         </thead>
                         <tbody>
-                      
-                      
-
                             <tr>
                                 <td style="border-radius: 10px;height: 10px;">
                                <?php echo $desc ?></td>
@@ -338,11 +355,7 @@ $conn->query($sqlStatus);
                                 <td> <?php echo $timestamp ?></td>
                                 <td> <?php echo $lat ?></td>
                                 <td> <?php echo $lon ?></td>
-                                
-                                
-                            </tr>
-                          
-                             
+                            </tr>         
                         </tbody>
                     </table>
             </div>

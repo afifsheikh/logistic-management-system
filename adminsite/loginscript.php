@@ -1,5 +1,5 @@
 <?php
-// session_start();
+ session_start();
 include("config.php");
 
 //get form user and pass value from login.php
@@ -14,7 +14,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
  if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // $myusername = mysqli_real_escape_string($conn,$_POST['username']);
-    $sql = "SELECT * FROM User WHERE userName = '$user'";
+    $sql = "SELECT * FROM user WHERE userName = '$user'";
     $result = mysqli_query($conn,$sql);
     if (!$result) {
        printf("Error: %s\n", mysqli_error($conn));
@@ -23,12 +23,14 @@ $pass = mysqli_real_escape_string($conn,$pass);
     $row = mysqli_fetch_array($result);
     $count = mysqli_num_rows($result);
     if($count == 1) { 
-      if ($row['userName'] == $user && $row['pass'] == $pass) {
+      if ('admin' == $user && $row['pass'] == $pass) {
 
-       //$_SESSION['login_user'] = $myusername;
+      //  $_SESSION['login_user'] = $row['userName'];
+       
        echo "<script type=\"text/javascript\">".
        "alert('success');".
        "</script>";
+       $_SESSION['loginuser'] = $user;
         header("location:index.php");
        }
        else{

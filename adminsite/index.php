@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+
+include("config.php");
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +121,7 @@ session_start();
 							<img src="assets/img/user/user.jpg" alt="" class="mw-100 mh-100 rounded-circle" />
 						</div>
 						<div class="menu-text"><span class="__cf_email__"
-								data-cfemail="3d4e585c5349555850587d5a505c5451135e5250"><?php echo $_SESSION['username']; ?></span>
+								data-cfemail="3d4e585c5349555850587d5a505c5451135e5250"><?php echo $_SESSION['loginuser']; ?></span>
 						</div>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right mr-lg-3">
@@ -128,7 +134,7 @@ session_start();
 						<a class="dropdown-item d-flex align-items-center" href="#">Setting <i
 								class="fa fa-wrench fa-fw ml-auto text-gray-400 f-s-16"></i></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item d-flex align-items-center" href="page_login.php">Log Out <i
+						<a class="dropdown-item d-flex align-items-center" href="page_login.php">Log Out <? session_destroy(); ?> <i
 								class="fa fa-toggle-off fa-fw ml-auto text-gray-400 f-s-16"></i></a>
 					</div>
 				</div>
@@ -444,98 +450,59 @@ session_start();
 				<!--FIRST ROW-->
 
 				<!--TABLE-->
-
-				<div class="col-xl-6" style="background-color: white;">
+				<div class="col-xl-12" style="background-color: white;">
 					<h3 style="padding: 30px;">Delivery Status</h2>
 						<table class="table table-light">
 							<thead>
 								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Status</th>
-									<th scope="col">Date</th>
-									<th scope="col">Linked Account</th>
-									<th scope="col">History</th>
+								<th scope="col">S.No</th>
+								<th scope="col">Desc</th>
+                                
+                                <th scope="col">Rec Id</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Date</th>
+								<th scope="col">User</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Lat</th>
+                                <th scope="col">Lon</th>
 								</tr>
 							</thead>
 							<tbody>
+							<?php
+	
+	 
+	 $tableQueryOnUser="SELECT * FROM user u join package p on p.u_id = u.u_id join p_status s on p.p_id = s.p_id and u.role in ('sender' , 'receiver') ";
+	 $result = $conn-> query($tableQueryOnUser);
+	 $res = $conn-> query($tableQueryOnUser);
 
+	if ($res->num_rows > 0) {
+		// output data of each row
+		$i=0;
+		while($row = $res->fetch_assoc()) {
+			//$pkg_id = $row['p_id'];
+		  $i++;
+			
+?>
 								<tr>
-									<th scope="row">3</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
+								<th scope="row" style="border-radius: 10px;height: 10px;"><?php echo $i;?></th>
+								<td ><?php echo $row['desc']; ?></td>
+								<td> <?php echo $row['hash']; ?></td>
+                                <td> <?php echo $row['status']; ?></td>
+                                <td> <?php echo $row['timestamp']; ?></td>
+								<td> <?php echo $row['userName']; ?></td>
+								<td> <?php echo $row['role']; ?></td>
+                                <td> <?php echo $row['latitude']; ?></td>
+                                <td> <?php echo $row['longitude']; ?></td>
+								<td> <button class="btn btn-danger">delete</button></td>
 								</tr>
-								<tr>
-									<th scope="row">4</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
-								<tr>
-									<th scope="row">5</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
-								<tr>
-									<th scope="row">6</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
-								<tr>
-									<th scope="row">7</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
-								<tr>
-									<th scope="row">8</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
-								<tr>
-									<th scope="row">9</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
-								<tr>
-									<th scope="row">10</th>
-									<td style="border-radius: 10px;height: 10px;">
-										Returned</td>
-									<td>August 8th, 2020</td>
-									<td>MobileDev</td>
-									<td><a>ersad7667r5r8d8asd90a</a></td>
-								</tr>
+								<?php
+      }
+      } else {
+          echo "0 results";
+      }
+  ?>
 							</tbody>
 						</table>
-				</div>
-
-
-				<div class="col-xl-6">
-					<!--MAP START-->
-					<!--Google map-->
-					<div id="map-container-google-2" class="z-depth-1-half map-container" style="height: 500px">
-						<iframe src="https://maps.google.com/maps?q=chicago&t=&z=13&ie=UTF8&iwloc=&output=embed"
-							frameborder="0" style="border:0; height: 100%;width: 100%;" allowfullscreen></iframe>
-					</div>
-					<!--Google Maps-->
 				</div>
 			</div>
 
@@ -544,15 +511,72 @@ session_start();
 
 				<!--TABLE-->
 
-				<div class="col-xl-7" style="background-color: white; margin-right: 15px;padding: 30px;">
-					<h3>General Info</h2>
+				<div class="col-xl-6" style="background-color: white; margin-right: 15px;padding: 30px;">
+					<h3>Package Info</h2>
 						<div>
-							<h6>Courier Name</h6>
-							<p>Leapord Courier</p>
-							<h6>Contact Phone Number</h6>
-							<p>0312-965754</p>
-							<h6>Address</h6>
-							<p>13 National Stadium Rd, Karsaz Faisal Cantonment, Karachi, Karachi City, Sindh</p>
+						<form action="" method="post">
+						<select name="pkg_id" class="browser-default custom-select">
+	  						<?php  while ($pkgData = mysqli_fetch_array($result)):; ?>
+							  <option value="<?php echo $pkgData['p_id']; ?>" ><?php echo $pkgData['desc'] ?></option>
+								<?php endwhile; ?>
+						</select>
+						<input type="submit" name="submit" value="Select" class="btn btn-success">
+						</form>
+						<?php
+
+    if(isset($_POST['submit'])){
+    if(!empty($_POST['pkg_id'])) {
+        $selected = $_POST['pkg_id'];
+        // echo 'You have chosen: ' . $selected;
+    } else {
+        // echo 'Please select the value.';
+    }
+	}
+
+?>
+
+
+<table class="table table-light">
+							<thead>
+								<tr>
+								<th scope="col">S.No</th>
+								<th scope="col">Desc</th>
+                                <th scope="col">lenght</th>
+                                <th scope="col">height</th>
+                                <th scope="col">weight</th>
+								<th scope="col">width</th>
+                                <th scope="col">qty</th>
+								</tr>
+							</thead>
+							<tbody>
+							
+<?php 
+$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
+$run = $conn-> query($pkgSql);
+if ($run->num_rows > 0) {
+	// output data of each row
+	$i=0;
+	while($pkgdetData = $run->fetch_assoc()) {
+		//$pkg_id = $row['p_id'];
+	  $i++;
+?>
+<tr>
+								<th scope="row" style="border-radius: 10px;height: 10px;"><?php echo $i;?></th>
+								<td ><?php echo $pkgdetData['desc']; ?></td>
+								<td> <?php echo $pkgdetData['length']; ?></td>
+                                <td> <?php echo $pkgdetData['height']; ?></td>
+                                <td> <?php echo $pkgdetData['weight']; ?></td>
+								<td> <?php echo $pkgdetData['width']; ?></td>
+								<td> <?php echo $pkgdetData['qty']; ?></td>
+								</tr>
+								<?php
+}
+} else {
+	echo "0 results";
+}
+								?>
+								</tbody>
+						</table>
 						</div>
 
 				</div>
@@ -561,12 +585,23 @@ session_start();
 				<div class="col-xl-4" style="background-color: white; padding: 30px;">
 					<h3>Customer Info</h3>
 					<div>
+					<?php
+						$userSql="SELECT * FROM  package p join user u on u.u_id = p.u_id where p.p_id = '$selected' ";
+						// $userRes = $conn-> query($userSql);
+						$userRes = mysqli_query($conn,$userSql);
+						$userData = mysqli_fetch_array($userRes);
+					?>
+
 						<h6>Customer Name</h6>
-						<p>Anas Ahmed</p>
+						<p><?php echo $userData['userName']; ?></p>
 						<h6>Contact Phone Number</h6>
-						<p>0312-965754</p>
-						<h6>Contact Email</h6>
-						<p>anas.ahmed@bukc.com</p>
+						<p><?php echo $userData['contactNo']; ?></p>
+						<h6>Address</h6>
+						<p><?php echo $userData['address']; ?></p>
+						<h6>CNIC</h6>
+						<p><?php echo $userData['cnic']; ?></p>
+						<h6>Role</h6>
+						<p><?php echo $userData['role']; ?></p>
 					</div>
 				</div>
 			</div>
