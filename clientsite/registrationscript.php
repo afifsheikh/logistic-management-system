@@ -87,7 +87,16 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
                     
                     $sqlStatus = "INSERT INTO p_status (`s_id`,`timestamp`,`status`,`p_id`,`u_id`,`hash`) VALUES (NULL,'".$currentDateTime."','on going','".$p_id."','".$u_id."','".$rti."')";
                     $conn->query($sqlStatus);
-                        
+                      
+                    //generate hash for block chain
+
+                    $string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc; //.$currentDateTime.'on going'.$p_id.$u_id;
+                    //echo $string;
+                    //hmec function for hashing
+                    $hash_val = crypt('ripemd160', $string);
+                    //echo $hash_val;
+                    $sqlEncrypt = "INSERT INTO tbl_encrypt (`id`,`hash_val`) VALUES (NULL,'$hash_val')";
+                    $conn->query($sqlEncrypt);
                       
                 }
                 $flag = true;

@@ -551,14 +551,77 @@ include("config.php");
 							<tbody>
 							
 <?php 
-$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
-$run = $conn-> query($pkgSql);
-if ($run->num_rows > 0) {
-	// output data of each row
-	$i=0;
-	while($pkgdetData = $run->fetch_assoc()) {
-		//$pkg_id = $row['p_id'];
-	  $i++;
+
+
+
+
+	if(isset($selected)){
+
+		//Check Block chain
+
+
+		
+	$EpkgSql = " SELECT * FROM  package p where p_id = '$selected' ";
+	$datarow = $conn-> query($EpkgSql);
+	if ($datarow->num_rows > 0) {
+		// output data of each row
+		while ($EData = $datarow->fetch_assoc()){
+			$desc = $EData['desc'];
+			$len = $EData['length']; 
+			$hei = $EData['height']; 
+			$wei = $EData['weight']; 
+			$wid = $EData['width']; 
+			$qty = $EData['qty'];
+			$rti = $EData['hash'];
+			$sloc = $EData['send_loc'];
+			$rloc = $EData['rec_loc'];
+		}
+	
+		$string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc;
+	
+		$hash_val = crypt('ripemd160', $string);
+	
+		//echo $hash_val;
+		//$sqlEncrypt = "INSERT INTO tbl_encrypt (`id`,`hash_val`) VALUES (NULL,'.$hash_val.')";
+	
+		$sqlEncrypt = "SELECT * FROM tbl_encrypt ";
+		$encryption = $conn->query($sqlEncrypt);
+		
+		echo $hash_val;
+		echo "<br>";
+			while($Edata = $encryption->fetch_assoc()){
+	
+				if(hash_equals($Edata['hash_val'], $hash_val)){
+					echo $Edata['hash_val']."<br>";
+					echo 'data not compromised';
+					break;
+				}else{
+					 echo $Edata['hash_val']."<br>";
+					// echo $hash_val;
+					echo 'data compromised';
+					break;
+					//exit();
+				}
+				// echo $Edata['hash_val'];
+				// 	echo $hash_val;
+			}
+		}
+
+		//block code end
+
+
+		$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
+		$run = $conn-> query($pkgSql);
+		if ($run->num_rows > 0) {
+		// output data of each row
+		$i=0;
+		while($pkgdetData = $run->fetch_assoc()) {
+			//$pkg_id = $row['p_id'];
+	  	$i++;
+	
+	
+
+	
 ?>
 <tr>
 								<th scope="row" style="border-radius: 10px;height: 10px;"><?php echo $i;?></th>
@@ -570,10 +633,12 @@ if ($run->num_rows > 0) {
 								<td> <?php echo $pkgdetData['qty']; ?></td>
 								</tr>
 								<?php
+								
 }
 } else {
-	echo "0 results";
+	echo "No Data Found";
 }
+
 								?>
 								</tbody>
 						</table>
@@ -602,6 +667,8 @@ if ($run->num_rows > 0) {
 						<p><?php echo $userData['cnic']; ?></p>
 						<h6>Role</h6>
 						<p><?php echo $userData['role']; ?></p>
+						<h6>Tracking Id</h6>
+						<p><?php echo $userData['hash']; } ?></p>
 					</div>
 				</div>
 			</div>
