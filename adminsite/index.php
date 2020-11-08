@@ -471,7 +471,7 @@ include("config.php");
 							<?php
 	
 	 
-	 $tableQueryOnUser="SELECT * FROM user u join package p on p.u_id = u.u_id join p_status s on p.p_id = s.p_id and u.role in ('sender' , 'receiver') ";
+	 $tableQueryOnUser="SELECT * FROM user u join package p on p.u_id = u.u_id join p_status s on p.p_id = s.p_id and u.role in ('sender' , 'receiver') and p.del <> 'deleted' ";
 	 $result = $conn-> query($tableQueryOnUser);
 	 $res = $conn-> query($tableQueryOnUser);
 
@@ -493,12 +493,34 @@ include("config.php");
 								<td> <?php echo $row['role']; ?></td>
                                 <td> <?php echo $row['latitude']; ?></td>
                                 <td> <?php echo $row['longitude']; ?></td>
-								<td> <button class="btn btn-danger">delete</button></td>
+								<td> 	<form action="" method="post">
+						<select name="del" class="browser-default custom-select" style="visibility: hidden;">
+							  <option value="<?php echo $row['p_id']; ?>" ><?php echo $row['userName'] ?></option>
+						</select>
+						<button name="delbtn" class="btn btn-danger" style="margin-top:-40%;" >Delete</button>
+						</form></td>
 								</tr>
 								<?php
-      }
+	  }
+	  //soft delete
+	//   if(isset($_POST['submit'])){
+		if(!empty($_POST['del'])) {
+			$delrec = $_POST['del'];
+			// soft delete query
+
+			$delSQL = "UPDATE package SET `del` = 'deleted' WHERE `p_id` = ".$delrec." ";
+			$conn->query($delSQL);
+			
+			
+			echo("<meta http-equiv='refresh' content='1'>");
+			 //echo 'You have chosen: ' . $delrec;
+		} else {
+			 //echo 'Please select the value.';
+		}
+	//}
+
       } else {
-          echo "0 results";
+          echo "no records found";
       }
   ?>
 							</tbody>
@@ -587,30 +609,13 @@ include("config.php");
 		$sqlEncrypt = "SELECT * FROM tbl_encrypt ";
 		$encryption = $conn->query($sqlEncrypt);
 		
-		echo $hash_val;
-		echo "<br>";
+		// echo $hash_val;
+		// echo "<br>";
 			while($Edata = $encryption->fetch_assoc()){
 	
 				if(hash_equals($Edata['hash_val'], $hash_val)){
-					echo $Edata['hash_val']."<br>";
-					echo 'data not compromised';
-					break;
-				}else{
-					 echo $Edata['hash_val']."<br>";
-					// echo $hash_val;
-					echo 'data compromised';
-					break;
-					//exit();
-				}
-				// echo $Edata['hash_val'];
-				// 	echo $hash_val;
-			}
-		}
-
-		//block code end
-
-
-		$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
+					//echo $Edata['hash_val']."<br>";
+					$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
 		$run = $conn-> query($pkgSql);
 		if ($run->num_rows > 0) {
 		// output data of each row
@@ -618,9 +623,6 @@ include("config.php");
 		while($pkgdetData = $run->fetch_assoc()) {
 			//$pkg_id = $row['p_id'];
 	  	$i++;
-	
-	
-
 	
 ?>
 <tr>
@@ -668,7 +670,21 @@ include("config.php");
 						<h6>Role</h6>
 						<p><?php echo $userData['role']; ?></p>
 						<h6>Tracking Id</h6>
-						<p><?php echo $userData['hash']; } ?></p>
+						<p><?php echo $userData['hash']; break; }else{
+					//echo $Edata['hash_val']."<br>";
+					// echo $hash_val;
+					echo '<script language="javascript">';
+					echo 'alert("Block Chain Compromised");';
+					//echo 'window.location = "page_login.php"';
+					echo '</script>';
+					break;
+					//exit();
+				}
+				// echo $Edata['hash_val'];
+				// 	echo $hash_val;
+			}
+		}}
+		//block code end ?></p>
 					</div>
 				</div>
 			</div>

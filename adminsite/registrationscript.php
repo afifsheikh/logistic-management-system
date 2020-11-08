@@ -1,4 +1,5 @@
 <?php
+session_destroy();
 session_start();
 include('config.php');
 
@@ -25,7 +26,7 @@ if(!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !em
         echo "<script type=\"text/javascript\">".
        "alert('success');".
        "</script>";
-        header("location:index.html");
+        header("location:index.php");
     } else {
         echo '<script language="javascript">';
         echo 'alert("registration failed");';

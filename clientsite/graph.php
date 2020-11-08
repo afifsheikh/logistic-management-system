@@ -14,7 +14,7 @@ $page = $_SERVER['PHP_SELF'];
 
 
 $line = '';
-
+//$f = fopen('https://drive.google.com/file/d/1lF2Elvdkk2QkuSjEm_SttYzsBcT3AOIS/view?usp=sharing','r')
 $f = fopen('ct.txt', 'r');
 $cursor = -1;
 
@@ -58,6 +58,7 @@ if(isset($_POST["return"])) {
 
     $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status`='returning' WHERE `u_id` = ".$u_id." ";
     $conn->query($sqlStatus);
+    $_SESSION['lat_long'] = $lat.','.$lon;
 }
 
 
@@ -71,6 +72,7 @@ if(isset($_POST["accept"])) {
 
     $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status`='accepted' WHERE `u_id` = ".$u_id." ";
     $conn->query($sqlStatus);
+    $_SESSION['lat_long'] = $lat.','.$lon;
 
 }
 
@@ -281,7 +283,27 @@ if(isset($_POST["accept"])) {
 <?PHP
 $un = $_SESSION['username'];
 
-$tableQueryOnUser="SELECT * FROM user u inner join package p on p.u_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
+$chkUsersql = "SELECT * FROM user where userName = '$un'";
+$r = mysqli_query($conn, $chkUsersql);
+
+while($chkuserData = $r->fetch_assoc()){
+    if($chkuserData['role']=='receiver'){
+        $tableQueryOnUser="SELECT * FROM user u inner join package p on p.rec_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
+        $showbtn = true;
+    break;
+    }else{
+        $tableQueryOnUser="SELECT * FROM user u inner join package p on p.u_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
+        $showbtn = false;
+    break;
+
+    }
+
+}
+
+
+
+ //$tableQueryOnUser="SELECT * FROM user u inner join package p on p.rec_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
+//$tableQueryOnUser="SELECT * FROM user u inner join package p on p.u_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
 
 $res = mysqli_query($conn, $tableQueryOnUser);
 $count = mysqli_num_rows($res);
@@ -289,7 +311,8 @@ while($row = $res->fetch_assoc()) {
   $desc =   $row['desc']; 
   $qty = $row['qty'];
   $status = $row['status']; 
-     $timestamp = $row['timestamp']; 
+  $timestamp = $row['timestamp'];
+
 }
 // if(isset($_POST["return"])) {
     
@@ -327,11 +350,12 @@ $conn->query($sqlStatus);
                                 <h2 style="padding: 30px;">Delivery Status</h2>
                             </div>
                             <div  class="col-6 text-center mt-4">
+                            <?php if ($showbtn) : ?>
                                 <form method="POST">
                                     <button class="btn btn-success" name="accept" onclick="accept()">Accept</button>
                                     <button class="btn btn-danger" name="return" onclick="return1()">Return</button>
                                 </form>
-                               
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>

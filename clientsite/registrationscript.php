@@ -33,6 +33,28 @@ $input_length = strlen($permitted_chars);
 
 if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !empty($role)) && $flag){
     
+
+    if($role == 'sender' && empty($rti) ){
+        echo '<script language="javascript">';
+    echo 'alert("CHECK All fields are required");';
+    echo 'window.location = "registration.php"';
+    echo '</script>';
+    die();
+    }
+
+    if(!empty($rti)){
+        $auth = "SELECT * FROM user WHERE `pass` = '".$rti."' ";
+            $authData = $conn->query($auth);
+            $aData = mysqli_fetch_array($authData);
+            if($aData['role'] != 'receiver'){
+                echo '<script language="javascript">';
+                echo 'alert("Tracking Id not match with receiver");';
+                echo 'window.location = "registration.php"';
+                echo '</script>';
+                die();
+            }
+    }
+
     $sql = "INSERT INTO user (`u_id`, `userName`, `pass`, `role`, `cnic`, `address`, `contactNo`) VALUES (NULL,'".$username."','".$random_string."','".$role."',".$cnic.",'".$address."',".$cno.")";
 
     
@@ -119,7 +141,7 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
     else {
         echo '<script language="javascript">';
         echo 'alert("registration failed");';
-        //echo 'window.location = "login.php"';
+        echo 'window.location = "registration.php"';
         echo '</script>';
         //header("location:registertion.html");
     }
@@ -133,7 +155,7 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
 }else{
     echo '<script language="javascript">';
     echo 'alert("CHECK All fields are required");';
-    //echo 'window.location = "login.php"';
+    echo 'window.location = "registration.php"';
     echo '</script>';
     die();
 

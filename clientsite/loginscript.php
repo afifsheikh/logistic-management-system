@@ -23,7 +23,7 @@ $pass = mysqli_real_escape_string($conn,$pass);
     $row = mysqli_fetch_array($result);
     $count = mysqli_num_rows($result);
     if($count == 1) {
-      if ($row['userName'] == $user && $row['pass'] == $pass) {
+      if ($row['userName'] == $user && $row['pass'] == $pass && ($row['role']=='sender' || $row['role']=='receiver') ) {
        //$_SESSION['login_user'] = $myusername;
        echo "<script type=\"text/javascript\">".
        "alert('success');".
