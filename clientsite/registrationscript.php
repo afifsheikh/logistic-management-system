@@ -107,7 +107,7 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
                     $currentDateTime=date('d/m/Y H:i:s');
                     // $newDateTime = date('h:i A', strtotime($currentDateTime));
                     
-                    $sqlStatus = "INSERT INTO p_status (`s_id`,`timestamp`,`status`,`p_id`,`u_id`,`hash`) VALUES (NULL,'".$currentDateTime."','on going','".$p_id."','".$u_id."','".$rti."')";
+                    $sqlStatus = "INSERT INTO p_status (`s_id`,`timestamp`,`status`,`p_id`,`u_id`,`rec_id`,`hash`) VALUES (NULL,'".$currentDateTime."','on going','".$p_id."','".$u_id."','".$rec_id."','".$rti."')";
                     $conn->query($sqlStatus);
                       
                     //generate hash for block chain
@@ -115,7 +115,7 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
                     $string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc; //.$currentDateTime.'on going'.$p_id.$u_id;
                     //echo $string;
                     //hmec function for hashing
-                    $hash_val = crypt('ripemd160', $string);
+                    $hash_val = hash('ripemd160', $string);
                     //echo $hash_val;
                     $sqlEncrypt = "INSERT INTO tbl_encrypt (`id`,`hash_val`) VALUES (NULL,'$hash_val')";
                     $conn->query($sqlEncrypt);

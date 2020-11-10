@@ -48,29 +48,28 @@ $lat = substr( $line,0,9);
 $lon = substr( $line,10,9);
 
 if(isset($_POST["return"])) {
-    
+
     $_SESSION['sec'] = "5";
     $un = $_SESSION['username'];
     $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
     $res = mysqli_query($conn, $sqlUserName);
     $row1 = mysqli_fetch_array($res);
     $u_id = $row1['u_id'];
-
-    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status`='returning' WHERE `u_id` = ".$u_id." ";
+    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'returning' WHERE `rec_id` = ".$u_id." ";
     $conn->query($sqlStatus);
     $_SESSION['lat_long'] = $lat.','.$lon;
 }
 
 
 if(isset($_POST["accept"])) {
+
     $_SESSION['sec'] = "100000";
     $un = $_SESSION['username'];
     $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
     $res = mysqli_query($conn, $sqlUserName);
     $row1 = mysqli_fetch_array($res);
     $u_id = $row1['u_id'];
-
-    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status`='accepted' WHERE `u_id` = ".$u_id." ";
+    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'accepted' WHERE `rec_id` = ".$u_id." ";
     $conn->query($sqlStatus);
     $_SESSION['lat_long'] = $lat.','.$lon;
 
@@ -307,7 +306,27 @@ while($chkuserData = $r->fetch_assoc()){
 
 $res = mysqli_query($conn, $tableQueryOnUser);
 $count = mysqli_num_rows($res);
-while($row = $res->fetch_assoc()) {   
+while($row = $res->fetch_assoc()) {  
+//coding resume 
+
+
+    //  echo   $row['desc']; 
+    //  echo    $row['qty'];
+    //  echo    $row['status']; 
+    //  echo   $row['timestamp'];
+    // if($row['desc'] != 'undefined' ){
+    //     $desc =   $row['desc']; 
+    //     $qty = $row['qty'];
+    //     $status = $row['status']; 
+    //     $timestamp = $row['timestamp'];
+    //   }else{
+    //       $desc =  '0'; 
+    //     $qty = '0';
+    //     $status = '-'; 
+    //     $timestamp = '-';
+      
+    //   }
+
   $desc =   $row['desc']; 
   $qty = $row['qty'];
   $status = $row['status']; 
@@ -373,12 +392,12 @@ $conn->query($sqlStatus);
                         <tbody>
                             <tr>
                                 <td style="border-radius: 10px;height: 10px;">
-                               <?php echo $desc ?></td>
+                               <?php if($count> 0){ echo $desc ?></td>
                                 <td> <?php echo $qty ?></td>
                                 <td> <?php echo $status ?></td>
                                 <td> <?php echo $timestamp ?></td>
                                 <td> <?php echo $lat ?></td>
-                                <td> <?php echo $lon ?></td>
+                                <td> <?php echo $lon; } else {echo 'no record';}?></td>
                             </tr>         
                         </tbody>
                     </table>

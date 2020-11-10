@@ -115,7 +115,7 @@ session_start();
 <div class="menu-img online">
 <img src="assets/img/user/user.jpg" alt="" class="mw-100 mh-100 rounded-circle" />
 </div>
-<div class="menu-text"><span class="__cf_email__" data-cfemail="d6a5b3b7b8a2beb3bbb396b1bbb7bfbaf8b5b9bb"><?php echo $_SESSION['username']; ?></span></div>
+<div class="menu-text"><span class="__cf_email__" data-cfemail="d6a5b3b7b8a2beb3bbb396b1bbb7bfbaf8b5b9bb"><?php echo $_SESSION['loginuser']; ?></span></div>
 </a>
 <div class="dropdown-menu dropdown-menu-right mr-lg-3">
 <a class="dropdown-item d-flex align-items-center" href="#">Edit Profile <i class="fa fa-user-circle fa-fw ml-auto text-gray-400 f-s-16"></i></a>

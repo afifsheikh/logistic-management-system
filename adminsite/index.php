@@ -601,7 +601,7 @@ include("config.php");
 	
 		$string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc;
 	
-		$hash_val = crypt('ripemd160', $string);
+		$hash_val = hash('ripemd160', $string);
 	
 		//echo $hash_val;
 		//$sqlEncrypt = "INSERT INTO tbl_encrypt (`id`,`hash_val`) VALUES (NULL,'.$hash_val.')";
@@ -620,6 +620,7 @@ include("config.php");
 		if ($run->num_rows > 0) {
 		// output data of each row
 		$i=0;
+		$Bcflag = true;
 		while($pkgdetData = $run->fetch_assoc()) {
 			//$pkg_id = $row['p_id'];
 	  	$i++;
@@ -653,7 +654,7 @@ include("config.php");
 					<h3>Customer Info</h3>
 					<div>
 					<?php
-						$userSql="SELECT * FROM  package p join user u on u.u_id = p.u_id where p.p_id = '$selected' ";
+						$userSql="SELECT * FROM  package p join user u on u.u_id = p.rec_id where p.p_id = '$selected' ";
 						// $userRes = $conn-> query($userSql);
 						$userRes = mysqli_query($conn,$userSql);
 						$userData = mysqli_fetch_array($userRes);
@@ -670,20 +671,33 @@ include("config.php");
 						<h6>Role</h6>
 						<p><?php echo $userData['role']; ?></p>
 						<h6>Tracking Id</h6>
-						<p><?php echo $userData['hash']; break; }else{
-					//echo $Edata['hash_val']."<br>";
-					// echo $hash_val;
-					echo '<script language="javascript">';
-					echo 'alert("Block Chain Compromised");';
-					//echo 'window.location = "page_login.php"';
-					echo '</script>';
-					break;
+						<p><?php echo $userData['hash']; 
+						
+						$Bcflag = true;
+						break;
+					 }else{
+					
+						// echo "<br>".$Edata['hash_val']."<br>";
+						// echo $hash_val;
+					// echo '<script language="javascript">';
+					// echo 'alert("Block Chain Compromised");';
+					// echo '</script>';
+					$Bcflag = false;
 					//exit();
 				}
-				// echo $Edata['hash_val'];
-				// 	echo $hash_val;
+				// echo "<br>".$Edata['hash_val']."<br>";
+				// 		echo $hash_val;
 			}
-		}}
+			if($Bcflag){
+
+			}else{
+				echo '<script language="javascript">';
+					echo 'alert("Block Chain Compromised");';
+					echo '</script>';
+			}
+		}
+	
+	}
 		//block code end ?></p>
 					</div>
 				</div>
