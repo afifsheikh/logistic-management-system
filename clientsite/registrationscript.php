@@ -109,7 +109,23 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
                     
                     $sqlStatus = "INSERT INTO p_status (`s_id`,`timestamp`,`status`,`p_id`,`u_id`,`rec_id`,`hash`) VALUES (NULL,'".$currentDateTime."','on going','".$p_id."','".$u_id."','".$rec_id."','".$rti."')";
                     $conn->query($sqlStatus);
-                      
+
+                    //Order funtionality
+
+                    if(!empty($qty) && !empty($len) && !empty($wid) && !empty($hei) && !empty($wei) ){
+                        $qty_net_amt = $qty*500;
+                        $dim_net_amt = $len+$wid+$hei+$wei;
+
+                        $net_amt = $qty_net_amt + $dim_net_amt + 300;
+                        
+
+                        $sqlOrder = "INSERT INTO orders (`o_id`,`p_id`,`total_sale`,`tax`) VALUES (NULL,'".$p_id."','".$net_amt."','300')";
+                        $conn->query($sqlOrder);
+                        //echo 'order inserted';
+                    }else{
+                        //echo 'some prob';
+                    }
+                    
                     //generate hash for block chain
 
                     $string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc; //.$currentDateTime.'on going'.$p_id.$u_id;
@@ -119,6 +135,8 @@ if((!empty($username) || !empty($address) || !empty($cnic) || !empty($cno) || !e
                     //echo $hash_val;
                     $sqlEncrypt = "INSERT INTO tbl_encrypt (`id`,`hash_val`) VALUES (NULL,'$hash_val')";
                     $conn->query($sqlEncrypt);
+
+
                       
                 }
                 $flag = true;

@@ -1,5 +1,7 @@
 <?php
 session_start();
+include("config.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -421,10 +423,10 @@ session_start();
 Analytics <small>stats, overview & performance</small>
 </h1>
 
-<div class="d-flex align-items-center mb-3">
+<!-- <div class="d-flex align-items-center mb-3">
 <a href="#" class="btn btn-default" id="daterangepicker"><i class="fa fa-fw fa-calendar ml-n1"></i> <span data-id="daterangepicker-date">Today</span> <b class="caret text-muted ml-1"></b></a>
 <span class="ml-2">compared to <span data-id="prev-date" id="daterangepicker-compare-date"></span></span>
-</div>
+</div> -->
 
 <div class="card-columns mb-4">
 
@@ -432,12 +434,24 @@ Analytics <small>stats, overview & performance</small>
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-2">
-<div class="flex-fill font-weight-600 fs-16px">Total sales</div>
+<div class="flex-fill font-weight-600 fs-16px">Total Sales</div>
 <a href="#">View report</a>
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
-<div>$821.50</div>
+<div><?php 
+	$sqlTotalSale = "SELECT SUM(total_sale) total_sale from orders";
+	$Saleresult = mysqli_query($conn,$sqlTotalSale);
+	$SaleData = mysqli_fetch_array($Saleresult);
+	$Salecount = mysqli_num_rows($Saleresult);
+	if($Salecount>0){
+		echo 'PKR: '.$SaleData['total_sale'];
+	}else{
+		echo 'No Data Found or been compromised';
+	}
+
+	
+?></div>
 <small class="fw-400 ml-auto text-success">+5%</small>
 </div>
 
@@ -461,18 +475,30 @@ Analytics <small>stats, overview & performance</small>
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-2">
-<div class="flex-fill font-weight-600 fs-16px">Online store sessions</div>
+<div class="flex-fill font-weight-600 fs-16px">Total Packages</div>
 <a href="#">View report</a>
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
-<div>39</div>
+<div>
+	<?php
+		$sqlTotalPackages = "SELECT count(p_id) total_sale from package";
+		$TotalPackagesresult = mysqli_query($conn,$sqlTotalPackages);
+		$TotalPackagesData = mysqli_fetch_array($TotalPackagesresult);
+		$TotalPackagescount = mysqli_num_rows($TotalPackagesresult);
+		if($TotalPackagescount>0){
+			echo 'No: '.$TotalPackagesData['total_sale'];
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?>
+</div>
 <small class="fw-400 ml-auto text-danger">-2.5%</small>
 </div>
 
 <div class="row mb-4">
-<div class="col-6">Visitors</div>
-<div class="col-3 text-center">2</div>
+<div class="col-6">Tax</div>
+<div class="col-3 text-center">300</div>
 <div class="col-3 text-right">
 <span class="text-danger">-</span> 50%
 </div>
@@ -540,7 +566,21 @@ Analytics <small>stats, overview & performance</small>
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
-<div>52.85%</div>
+<div>
+	<?php 
+		$sqlReturnRate = "select count(p.p_id) r_cnt, ( select count(p.p_id) t_cnt from package p, p_status s where s.p_id = p.p_id and s.status in ('on going', 'accepted')) t_cnt from package p, p_status s where s.p_id = p.p_id and s.status = 'returning'";
+		$ReturnRateresult = mysqli_query($conn,$sqlReturnRate);
+		$ReturnRateData = mysqli_fetch_array($ReturnRateresult);
+		$ReturnRatecount = mysqli_num_rows($ReturnRateresult);
+		if($ReturnRatecount>0){
+			$rr = (($ReturnRateData['r_cnt']/$ReturnRateData['t_cnt'])*100);
+			$rr = number_format($rr,2);
+			echo $rr."%";
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?>
+</div>
 <small class="fw-400 ml-auto text-danger">-7%</small>
 </div>
 
@@ -577,16 +617,16 @@ Analytics <small>stats, overview & performance</small>
 <div class="fs-13px font-weight-600 mb-3">CONVERSION FUNNEL</div>
 <div class="row mb-2">
 <div class="col-6">
-<div>Added to cart</div>
-<div class="text-gray-700 fs-13px">55 session</div>
+<div>Order placed</div>
+<div class="text-gray-700 fs-13px">50 orders</div>
 </div>
 <div class="col-3 text-center">25.28%</div>
 <div class="col-3 text-center"><span class="text-danger">-</span> 5%</div>
 </div>
 <div class="row mb-2">
 <div class="col-6">
-<div>Reached checkout</div>
-<div class="text-gray-700 fs-13px">25 session</div>
+<div>Reached orders</div>
+<div class="text-gray-700 fs-13px">8 orders</div>
 </div>
 <div class="col-3 text-center">15.28%</div>
 <div class="col-3 text-center"><span class="text-success">+</span> 82%</div>
@@ -594,7 +634,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="row">
 <div class="col-6">
 <div>Sessions converted</div>
-<div class="text-gray-700 fs-13px">5 session</div>
+<div class="text-gray-700 fs-13px">3 orders</div>
 </div>
 <div class="col-3 text-center">5.28%</div>
 <div class="col-3 text-center"><span class="text-success">+</span> 82%</div>
@@ -612,7 +652,19 @@ Analytics <small>stats, overview & performance</small>
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
-<div>$35.12</div>
+<div>
+	<?php
+		$sqlAvg_Order = "SELECT (count(total_sale)/sum(total_sale))*100 avg_sale from orders";
+		$AvgOrder_result = mysqli_query($conn,$sqlAvg_Order);
+		$AvgOrderData = mysqli_fetch_array($AvgOrder_result);
+		$AvgOrdercount = mysqli_num_rows($AvgOrder_result);
+		if($AvgOrdercount>0){
+			echo 'No: '.$AvgOrderData['avg_sale'];
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?>
+</div>
 <small class="fw-400 ml-auto text-danger">-3.2%</small>
 </div>
 
@@ -639,7 +691,19 @@ Analytics <small>stats, overview & performance</small>
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
-<div>12</div>
+<div>
+	<?php
+		$sqlTotalOrder = "SELECT Count(p_id) pkgCount from package";
+		$Orderresult = mysqli_query($conn,$sqlTotalOrder);
+		$OrderData = mysqli_fetch_array($Orderresult);
+		$Ordercount = mysqli_num_rows($Orderresult);
+		if($Ordercount>0){
+			echo $OrderData['pkgCount'];
+		}else{
+			echo 'No Data Found or been compromised';
+		}		
+	?>
+</div>
 <small class="fw-400 ml-auto text-success">+57%</small>
 </div>
 
@@ -663,29 +727,34 @@ Analytics <small>stats, overview & performance</small>
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-3">
-<div class="flex-fill font-weight-600 fs-16px">Top pages by sessions</div>
+<div class="flex-fill font-weight-600 fs-16px">Top products by customers</div>
 </div>
+<?php
+	$sqlGroupStatus = "select count(p.p_id) r_cnt,s.status sts from package p, p_status s where s.p_id = p.p_id group by s.status ";
+	$GroupStatusresult = mysqli_query($conn,$sqlGroupStatus);
+	$GroupStatusData = mysqli_fetch_array($GroupStatusresult);
+	$GroupStatuscount = mysqli_num_rows($GroupStatusresult);
+	// echo $GroupStatuscount;
+	if($GroupStatuscount>0){
+		// echo $GroupStatusData['r_cnt'];
+
+		while($GroupStatusData = $GroupStatusresult->fetch_assoc()){
+			
+			
+?>
 
 <div class="row mb-2">
-<div class="col-6"><div><a href="#">/phone/apple-11-pro-max</a></div></div>
-<div class="col-3 text-center">15</div>
-<div class="col-3 text-center"><span class="text-success">+</span> 15%</div>
+<div class="col-10"><div><a href="#"> <?php  echo $GroupStatusData['sts'] .' : '. $GroupStatusData['r_cnt'];}
+}else{
+	echo 'No Data Found or been compromised';
+}  ?></a></div></div>
 </div>
-<div class="row mb-2">
-<div class="col-6"><div><a href="#">/tablet/apple-ipad-pro-128gb</a></div></div>
-<div class="col-3 text-center">12</div>
-<div class="col-3 text-center"><span class="text-success">+</span> 8%</div>
-</div>
-<div class="row">
-<div class="col-6"><div><a href="#">/desktop/apple-mac-pro</a></div></div>
-<div class="col-3 text-center">4</div>
-<div class="col-3 text-center"><span class="text-danger">-</span> 3%</div>
-</div>
+
 </div>
 </div>
 
 
-<div class="card">
+<div class="card mt-5">
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-3">
