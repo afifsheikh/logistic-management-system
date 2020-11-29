@@ -7,11 +7,7 @@ $_SESSION['sec'] = "10";
 
 
 
-
 $page = $_SERVER['PHP_SELF'];
-
-
-
 
 $line = '';
 //$f = fopen('https://drive.google.com/file/d/1lF2Elvdkk2QkuSjEm_SttYzsBcT3AOIS/view?usp=sharing','r')
@@ -58,6 +54,7 @@ if(isset($_POST["return"])) {
     $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'returning' WHERE `rec_id` = ".$u_id." ";
     $conn->query($sqlStatus);
     $_SESSION['lat_long'] = $lat.','.$lon;
+    
 }
 
 
@@ -72,7 +69,7 @@ if(isset($_POST["accept"])) {
     $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'accepted' WHERE `rec_id` = ".$u_id." ";
     $conn->query($sqlStatus);
     $_SESSION['lat_long'] = $lat.','.$lon;
-
+    
 }
 
 ?>

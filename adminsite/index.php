@@ -121,7 +121,18 @@ include("config.php");
 							<img src="assets/img/user/user.jpg" alt="" class="mw-100 mh-100 rounded-circle" />
 						</div>
 						<div class="menu-text"><span class="__cf_email__"
-								data-cfemail="3d4e585c5349555850587d5a505c5451135e5250"><?php echo $_SESSION['loginuser']; ?></span>
+								data-cfemail="3d4e585c5349555850587d5a505c5451135e5250"><?php
+								if($_SESSION['loginuser'] == 'undefined' || $_SESSION['loginuser'] == null || $_SESSION['loginuser'] == '' || $_SESSION['loginuser'] == 'not logged in'){ 
+									 echo "<script type=\"text/javascript\">".
+       									  "alert('User Not Logged In');".
+											 "</script>";
+											$_SESSION['loginuser'] = 'not logged in';
+											echo $_SESSION['loginuser'];
+											echo '<script> location.replace("page_login.php"); </script>';
+											 }
+										   else
+										   {echo $_SESSION['loginuser'];}
+										    ?></span>
 						</div>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right mr-lg-3">
@@ -134,7 +145,7 @@ include("config.php");
 						<a class="dropdown-item d-flex align-items-center" href="#">Setting <i
 								class="fa fa-wrench fa-fw ml-auto text-gray-400 f-s-16"></i></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item d-flex align-items-center" href="page_login.php">Log Out <? session_destroy(); ?> <i
+						<a class="dropdown-item d-flex align-items-center" href="page_login.php">Log Out <?   session_unset(); session_destroy(); $_SESSION['loginuser'] == ''; ?> <i
 								class="fa fa-toggle-off fa-fw ml-auto text-gray-400 f-s-16"></i></a>
 					</div>
 				</div>
