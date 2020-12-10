@@ -30,7 +30,7 @@
 </div>
 <div class="form-group">
 <label>Cnic <span class="text-danger">*</span></label>
-<input type="number" class="form-control form-control-lg fs-15px" value="" name="cnic"/>
+<input type="text" class="form-control form-control-lg fs-15px" value="" name="cnic" pattern="\d*" maxlength="13"/>
 </div>
 <div class="form-group">
 <label>Contact No <span class="text-danger">*</span></label>

@@ -221,7 +221,7 @@ session_start();
                     <input type="text" class="form-control" placeholder="Address" required="required" name="address">
                 </div>
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="CNIC" required="required" name="cnic">
+                    <input type="text" class="form-control" placeholder="CNIC" required="required" name="cnic" pattern="\d*" maxlength="13">
                 </div>
                 <div class="form-group">
                     <input type="number" class="form-control" placeholder="Contact Number" required="required" name="cno">

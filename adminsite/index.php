@@ -131,7 +131,8 @@ include("config.php");
 											echo '<script> location.replace("page_login.php"); </script>';
 											 }
 										   else
-										   {echo $_SESSION['loginuser'];}
+										   {echo $_SESSION['loginuser'];
+											}
 										    ?></span>
 						</div>
 					</a>
