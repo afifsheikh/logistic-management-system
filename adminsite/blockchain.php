@@ -179,7 +179,7 @@ include("config.php");
 							<span class="menu-text">Analytics</span>
 						</a>
 					</div>
-                    <div class="menu-item">
+					<div class="menu-item">
 						<a href="user.php" class="menu-link">
 							<span class="menu-icon"><i class="fa fa-user"></i></span>
 							<span class="menu-text">Users</span>
@@ -474,30 +474,27 @@ include("config.php");
 				<!--FIRST ROW-->
 
 				<!--TABLE-->
-				<div class="col-xl-12" style="background-color: white;">
-					<h3 style="padding: 30px;">Approve User</h2>
+				<div class="col-sm-12" style="background-color: white;">
+					<h3 style="padding: 30px;">Encrypted Data</h2>
 						<table class="table table-light">
 							<thead>
 								<tr>
 								<th scope="col">S.No</th>
-								<th scope="col">Name</th>
-                                
-                                <th scope="col">Tracking Id</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Cnic</th>
-								<th scope="col">address</th>
-                                <th scope="col">Contact No</th>
-                                <!-- <th scope="col">Valid</th>
-                                <th scope="col">Lon</th> -->
+                                <th scope="col">hash</th>
+                                <th scope="col">date/time</th>
 								</tr>
 							</thead>
 							<tbody>
 							<?php
 	
 	 
-	 $tableQueryOnUser="SELECT * FROM user u where u.valid = 'N' ";
+     $tableQueryOnUser="SELECT * FROM tbl_encrypt u WHERE u.deleted <> 'deleted' ";
 	 $result = $conn-> query($tableQueryOnUser);
-	 $res = $conn-> query($tableQueryOnUser);
+     $res = $conn-> query($tableQueryOnUser);
+     
+     $tableQueryOnpkg="SELECT * FROM package ";
+     $resultPkg = $conn-> query($tableQueryOnpkg);
+
 
 	if ($res->num_rows > 0) {
 		// output data of each row
@@ -509,17 +506,14 @@ include("config.php");
 ?>
 								<tr>
 								<th scope="row" style="border-radius: 10px;height: 10px;"><?php echo $i;?></th>
-								<td ><?php echo $row['userName']; ?></td>
-								<td> <?php echo $row['pass']; ?></td>
-                                <td> <?php echo $row['role']; ?></td>
-                                <td> <?php echo $row['cnic']; ?></td>
-								<td> <?php echo $row['address']; ?></td>
-								<td> <?php echo $row['contactNo']; ?></td>
+							
+								<td> <?php echo $row['hash_val']; ?></td>
+                                <td> <?php echo $row['timestamp']; ?></td>
 								<td> 	<form action="" method="post">
 						<select name="del" class="browser-default custom-select" style="visibility: hidden;">
-							  <option value="<?php echo $row['u_id']; ?>" ><?php echo $row['userName'] ?></option>
+							  <option value="<?php echo $row['id']; ?>" ><?php echo $row['hash_val'] ?></option>
 						</select>
-						<button name="delbtn" class="btn btn-success" style="margin-top:-45%;" >Approve</button>
+						<button name="delbtn" class="btn btn-danger"  style="margin-top:-10%;">Delete</button>
 						</form></td>
 								</tr>
 								<?php
@@ -530,7 +524,7 @@ include("config.php");
 			$delrec = $_POST['del'];
 			// soft delete query
 
-			$delSQL = "UPDATE user SET `valid` = 'Y' WHERE `u_id` = ".$delrec." ";
+			$delSQL = "UPDATE tbl_encrypt SET `deleted` = 'deleted' WHERE `id` = ".$delrec." ";
 			$conn->query($delSQL);
 			
 			
@@ -550,6 +544,209 @@ include("config.php");
 				</div>
 			</div>
 
+			<div class="row " style="margin-top: 50px;">
+				<!--FIRST ROW-->
+
+				<!--TABLE-->
+
+				<div class="col-xl-6" style="background-color: white; margin-right: 15px;padding: 30px;">
+					<h3>Smart Contract</h2>
+						<div>
+						<form action="" method="post">
+						<select name="pkg_id" class="browser-default custom-select">
+	  						<?php  while ($pkgData = mysqli_fetch_array($resultPkg)):; ?>
+							  <option value="<?php echo $pkgData['p_id']; ?>" ><?php echo $pkgData['p_id'] ?></option>
+								<?php endwhile; ?>
+						</select>
+						<input type="submit" name="submit" value="Select" class="btn btn-success">
+						</form>
+						<?php
+
+    if(isset($_POST['submit'])){
+    if(!empty($_POST['pkg_id'])) {
+        $selected = $_POST['pkg_id'];
+        // echo 'You have chosen: ' . $selected;
+    } else {
+        // echo 'Please select the value.';
+    }
+	}
+
+?>
+
+
+<!-- <table class="table table-light">
+							<thead>
+								<tr>
+								<th scope="col">S.No</th>
+								<th scope="col">Desc</th>
+                                <th scope="col">lenght</th>
+                                <th scope="col">height</th>
+                                <th scope="col">weight</th>
+								<th scope="col">width</th>
+                                <th scope="col">qty</th>
+								</tr>
+							</thead>
+							<tbody> -->
+							
+<?php 
+
+
+
+
+	if(isset($selected)){
+
+		//Check Block chain
+
+
+		
+	$EpkgSql = " SELECT * FROM  package p where p_id = '$selected' ";
+	$datarow = $conn-> query($EpkgSql);
+	if ($datarow->num_rows > 0) {
+		// output data of each row
+		while ($EData = $datarow->fetch_assoc()){
+			$desc = $EData['desc'];
+			$len = $EData['length']; 
+			$hei = $EData['height']; 
+			$wei = $EData['weight']; 
+			$wid = $EData['width']; 
+			$qty = $EData['qty'];
+			$rti = $EData['hash'];
+			$sloc = $EData['send_loc'];
+			$rloc = $EData['rec_loc'];
+		}
+	
+		$string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc;
+	
+		$hash_val = hash('ripemd160', $string);
+	
+		//echo $hash_val;
+		//$sqlEncrypt = "INSERT INTO tbl_encrypt (`id`,`hash_val`) VALUES (NULL,'.$hash_val.')";
+	
+		$sqlEncrypt = "SELECT * FROM tbl_encrypt ";
+		$encryption = $conn->query($sqlEncrypt);
+		
+		// echo $hash_val;
+        // echo "<br>";
+        $int = 1;
+		// echo $hash_val;
+		// echo "<br>";
+		//echo "<h3>Smart Contract</h3><br>";
+			while($Edata = $encryption->fetch_assoc()){
+    
+                echo "<span style='font-size:25px;'>Record :$int</span><br>";
+				echo 'treversing chain:'.$Edata['hash_val']."<br><br>";
+					echo 'package hash :'.$hash_val."<br><br>";
+					echo 'time/date :'.$Edata['timestamp']."<br><br>";
+					$int++;	
+
+				if(hash_equals($Edata['hash_val'], $hash_val)){
+                    echo "<br><br><br>";
+                    echo "<h5>Matched Block chain</h5>";
+					echo 'treversing chain:'.$Edata['hash_val']."<br><br>";
+                    echo 'package hash :'.$hash_val."<br><br>";
+                    echo 'Block chain secured';
+                    
+					$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
+		$run = $conn-> query($pkgSql);
+		if ($run->num_rows > 0) {
+		// output data of each row
+		$i=0;
+		$Bcflag = true;
+		while($pkgdetData = $run->fetch_assoc()) {
+			//$pkg_id = $row['p_id'];
+	  	$i++;
+	
+?>
+
+								<?php
+								
+}
+} else {
+	echo "No Data Found";
+}
+
+								?>
+								</tbody>
+						</table>
+						</div>
+
+				</div>
+
+
+				<div class="col-xl-4" style="background-color: white; padding: 30px;">
+					<h3>Contract Detail</h3>
+					<div>
+					<?php
+                        $userSql="SELECT * FROM  package p join user u on u.u_id = p.rec_id where p.p_id = '$selected' ";
+                        $senSql="SELECT * FROM  package p join user u on u.u_id = p.u_id where p.p_id = '$selected' ";
+						// $userRes = $conn-> query($userSql);
+						$userRes = mysqli_query($conn,$userSql);
+                        $userData = mysqli_fetch_array($userRes);
+                        
+                        $userSen = mysqli_query($conn,$senSql);
+						$userSenData = mysqli_fetch_array($userSen);
+					?>
+                        <h6>Package Desc</h6>
+						<p><?php echo $userData['desc']; ?></p>
+			
+                        <h6>Sender Name</h6>
+						<p><?php echo $userSenData['userName']; ?></p>
+						<h6>Contact Phone Number</h6>
+						<p><?php echo $userSenData['contactNo']; ?></p>
+						<h6>Address</h6>
+						<p><?php echo $userSenData['address']; ?></p>
+						<h6>CNIC</h6>
+						<p><?php echo $userSenData['cnic']; ?></p>
+						<h6>Role</h6>
+						<p><?php echo $userSenData['role']; ?></p>
+                        <h6>Tracking Id</h6>
+						<p><?php echo $userSenData['pass']; ?></p>
+
+                        <h6>Receiver Name</h6>
+						<p><?php echo $userData['userName']; ?></p>
+						<h6>Contact Phone Number</h6>
+						<p><?php echo $userData['contactNo']; ?></p>
+						<h6>Address</h6>
+						<p><?php echo $userData['address']; ?></p>
+						<h6>CNIC</h6>
+						<p><?php echo $userData['cnic']; ?></p>
+						<h6>Role</h6>
+						<p><?php echo $userData['role']; ?></p>
+						<h6>Tracking Id</h6>
+						<p><?php echo $userData['hash']; 
+						$Bcflag = true;
+						break;
+					 }else{
+                    
+                        
+					
+						// echo "<br>".$Edata['hash_val']."<br>";
+						// echo $hash_val;
+					// echo '<script language="javascript">';
+					// echo 'alert("Block Chain Compromised");';
+					// echo '</script>';
+					$Bcflag = false;
+					//exit();
+				}
+				// echo "<br>".$Edata['hash_val']."<br>";
+				// 		echo $hash_val;
+			}
+			if($Bcflag){
+                echo '<script language="javascript">';
+					echo 'alert("Block Chain Secured Retrieving data");';
+					echo '</script>';
+			}else{
+				echo '<script language="javascript">';
+					echo 'alert("Block Chain Compromised");';
+					echo '</script>';
+			}
+		}
+	
+	}
+		//block code end ?></p>
+					</div>
+				</div>
+			</div>
 
 			<!--END FIRST ROW-->
 

@@ -185,6 +185,12 @@ include("config.php");
 							<span class="menu-text">Users</span>
 						</a>
 					</div>
+					<div class="menu-item">
+						<a href="blockchain.php" class="menu-link">
+							<span class="menu-icon"><i class="fa fa-chain"></i></span>
+							<span class="menu-text">Block Chain process</span>
+						</a>
+					</div>
 					<!-- <div class="menu-item has-sub">
 						<a href="#" class="menu-link">
 							<span class="menu-icon">
@@ -626,13 +632,24 @@ include("config.php");
 	
 		$sqlEncrypt = "SELECT * FROM tbl_encrypt ";
 		$encryption = $conn->query($sqlEncrypt);
-		
+		// $int = 1;
 		// echo $hash_val;
 		// echo "<br>";
+		// echo "<h3>Smart Contract</h3><br>";
 			while($Edata = $encryption->fetch_assoc()){
-	
+				// echo '<script language="javascript">';
+				// echo 'alert(" treversing chain:'.$Edata['hash_val']; echo '\npackage hash :'.$hash_val .'");';
+				// echo '</script>';
+				
+				// echo 'Record :'.$int."<br>";
+				// echo 'treversing chain:'.$Edata['hash_val']."<br><br>";
+				// 	echo 'package hash :'.$hash_val."<br><br>";
+				// 	echo 'time/date :'.$Edata['timestamp']."<br><br>";
+				// 	$int++;	
 				if(hash_equals($Edata['hash_val'], $hash_val)){
-					//echo $Edata['hash_val']."<br>";
+					// echo $Edata['hash_val']."<br>";
+					// echo $hash_val."<br>";
+					
 					$pkgSql="SELECT * FROM  package p where p_id = '$selected' ";
 		$run = $conn-> query($pkgSql);
 		if ($run->num_rows > 0) {

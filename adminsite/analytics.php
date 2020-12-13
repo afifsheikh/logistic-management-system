@@ -157,6 +157,12 @@ include("config.php");
 							<span class="menu-text">Users</span>
 						</a>
 					</div>
+					<div class="menu-item">
+						<a href="blockchain.php" class="menu-link">
+							<span class="menu-icon"><i class="fa fa-chain"></i></span>
+							<span class="menu-text">Block Chain process</span>
+						</a>
+					</div>
 <!-- <div class="menu-item has-sub">
 <a href="#" class="menu-link">
 <span class="menu-icon">
