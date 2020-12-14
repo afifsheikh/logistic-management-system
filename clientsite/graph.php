@@ -6,7 +6,6 @@ include("config.php");
 $_SESSION['sec'] = "10";
 
 
-
 $page = $_SERVER['PHP_SELF'];
 
 $line = '';
@@ -43,6 +42,11 @@ $_SESSION['lat_long'] = $line;
 $lat = substr( $line,0,9);
 $lon = substr( $line,10,9);
 
+
+$showAccept = true;
+
+
+
 if(isset($_POST["return"])) {
 
     $_SESSION['sec'] = "5";
@@ -54,21 +58,39 @@ if(isset($_POST["return"])) {
     $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'returning' WHERE `rec_id` = ".$u_id." ";
     $conn->query($sqlStatus);
     $_SESSION['lat_long'] = $lat.','.$lon;
+    // $showAccept = false;
+    // $page = null;
+   
     
 }
 
 
 if(isset($_POST["accept"])) {
-
-    $_SESSION['sec'] = "100000";
+    
     $un = $_SESSION['username'];
     $sqlUserName = "SELECT * FROM user WHERE userName = '$un'";
     $res = mysqli_query($conn, $sqlUserName);
     $row1 = mysqli_fetch_array($res);
+        
     $u_id = $row1['u_id'];
-    $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'accepted' WHERE `rec_id` = ".$u_id." ";
-    $conn->query($sqlStatus);
-    $_SESSION['lat_long'] = $lat.','.$lon;
+    
+    $sqlStatus = "SELECT s.status FROM p_status s where s.rec_id  = $u_id";
+    $resStatus = mysqli_query($conn, $sqlStatus);
+    $statusData = mysqli_fetch_array($resStatus);
+
+    //echo $statusData['status'];
+    if($statusData['status']!='returning'){
+
+        $_SESSION['sec'] = "100000";
+
+        $sqlStatus = "UPDATE p_status SET `latitude` = ".$lat.", `longitude`= ".$lon.", `status` = 'accepted' WHERE `rec_id` = ".$u_id." ";
+        $conn->query($sqlStatus);
+        $_SESSION['lat_long'] = $lat.','.$lon;
+    }
+    
+    // $page = null;
+
+
     
 }
 
@@ -82,7 +104,7 @@ if(isset($_POST["accept"])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="<?php echo $_SESSION['sec']?>;URL='<?php echo $page?>'">
+    <meta http-equiv="refresh" content="<?php echo $_SESSION['sec']?>;URL='<?php echo $page?>'"> 
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Transcrew | Courier & Delivery Service HTML Template</title>
     <meta name="description" content="Transcrew | Courier & Delivery Service HTML Template" />
@@ -286,6 +308,7 @@ while($chkuserData = $r->fetch_assoc()){
     if($chkuserData['role']=='receiver'){
         $tableQueryOnUser="SELECT * FROM user u inner join package p on p.rec_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
         $showbtn = true;
+        
     break;
     }else{
         $tableQueryOnUser="SELECT * FROM user u inner join package p on p.u_id = u.u_id inner join p_status s on p.p_id = s.p_id and u.userName = '$un' ";
@@ -368,8 +391,8 @@ $conn->query($sqlStatus);
                             <div  class="col-6 text-center mt-4">
                             <?php if ($showbtn) : ?>
                                 <form method="POST">
-                                    <button class="btn btn-success" name="accept" onclick="accept()">Accept</button>
-                                    <button class="btn btn-danger" name="return" onclick="return1()">Return</button>
+                                <button class="btn btn-success" id="accept_button" name="accept" onclick="accept()" >Accept</button>
+                                <button class="btn btn-danger" name="return" onclick="return1()" >Return</button> 
                                 </form>
                                 <?php endif ?>
                             </div>
@@ -533,6 +556,14 @@ $conn->query($sqlStatus);
     <script src="js/venobox.min.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
+    <!-- For button hide -->
+    <script type='text/javascript'>
+        function accept() {
+            // var x = document.getElementById("accept_button");
+            // x.style.display = "none";
+            document.getElementById('accept_button').style.display = "none";;
+        }
+    </script>
 </body>
 
 </html>
