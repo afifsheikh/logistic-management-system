@@ -5,6 +5,101 @@ session_start();
 include("config.php");
 
 
+class Block
+{
+	public $nonce;
+
+	public function __construct($index, $timestamp, $data, $previousHash = null)
+	{
+		$this->index = $index;
+		$this->timestamp = $timestamp;
+		$this->data = $data;
+		$this->previousHash = $previousHash;
+		$this->hash = $this->calculateHash();
+		$this->nonce = 0;
+	}
+
+	public function calculateHash()
+	{
+		return hash("ripemd160", $this->index.$this->previousHash.$this->timestamp.((string)$this->data).$this->nonce);
+	}
+}
+
+/**
+* A simple blockchain class with proof-of-work (mining).
+*/
+class BlockChain
+{
+/**
+ * Instantiates a new Blockchain.
+ */
+public function __construct()
+{
+	$this->chain = [$this->createGenesisBlock()];
+	// $this->difficulty = 4;
+}
+
+/**
+ * Creates the genesis block.
+ */
+private function createGenesisBlock()
+{
+	return new Block(0, strtotime("2017-01-01"), "Genesis Block");
+}
+
+/**
+ * Gets the last block of the chain.
+ */
+public function getLastBlock()
+{
+	return $this->chain[count($this->chain)-1];
+}
+
+/**
+ * Pushes a new block onto the chain.
+ */
+public function push($block)
+{
+	$block->previousHash = $this->getLastBlock()->hash;
+	// $this->mine($block);
+	array_push($this->chain, $block);
+}
+
+/**
+ * Mines a block.
+ */
+// public function mine($block)
+// {
+//     while (substr($block->hash, 0, $this->difficulty) !== str_repeat("0", $this->difficulty)) {
+//         $block->nonce++;
+//         $block->hash = $block->calculateHash();
+//     }
+
+//     echo "Block mined: ".$block->hash."\n";
+// }
+
+/**
+ * Validates the blockchain's integrity. True if the blockchain is valid, false otherwise.
+ */
+public function isValid()
+{
+	for ($i = 1; $i < count($this->chain); $i++) {
+		$currentBlock = $this->chain[$i];
+		$previousBlock = $this->chain[$i-1];
+
+		if ($currentBlock->hash != $currentBlock->calculateHash()) {
+			return false;
+		}
+
+		if ($currentBlock->previousHash != $previousBlock->hash) {
+			return false;
+		}
+	}
+
+	return true;
+}
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -598,7 +693,7 @@ include("config.php");
 		//Check Block chain
 
 
-		
+	$countForBC = 1;
 	$EpkgSql = " SELECT * FROM  package p where p_id = '$selected' ";
 	$datarow = $conn-> query($EpkgSql);
 	if ($datarow->num_rows > 0) {
@@ -613,6 +708,14 @@ include("config.php");
 			$rti = $EData['hash'];
 			$sloc = $EData['send_loc'];
 			$rloc = $EData['rec_loc'];
+
+			$stringForBlockchain = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc;
+			$hash_valForBC = hash('ripemd160', $stringForBlockchain);
+			$testCoin = new BlockChain();
+			$testCoin->push(new Block($countForBC, strtotime("now"), $hash_valForBC));
+			echo $testCoin->chain[$countForBC]->data."<br>";
+			$countForBC++;
+
 		}
 	
 		$string = $qty.$len.$wei.$hei.$wid.$desc.$rti.$sloc.$rloc;
@@ -718,8 +821,6 @@ include("config.php");
 						break;
 					 }else{
                     
-                        
-					
 						// echo "<br>".$Edata['hash_val']."<br>";
 						// echo $hash_val;
 					// echo '<script language="javascript">';
@@ -743,7 +844,9 @@ include("config.php");
 		}
 	
 	}
-		//block code end ?></p>
+		//block code end 
+		?>
+		</p>
 					</div>
 				</div>
 			</div>
