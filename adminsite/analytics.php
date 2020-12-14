@@ -447,7 +447,7 @@ Analytics <small>stats, overview & performance</small>
 
 <div class="d-flex align-items-center mb-2">
 <div class="flex-fill font-weight-600 fs-16px">Total Sales</div>
-<a href="#">View report</a>
+<!-- <a href="#">View report</a> --> 
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
@@ -464,7 +464,7 @@ Analytics <small>stats, overview & performance</small>
 
 	
 ?></div>
-<small class="fw-400 ml-auto text-success">+5%</small>
+<!-- <small class="fw-400 ml-auto text-success">+5%</small> -->
 </div>
 
 <div>
@@ -488,7 +488,7 @@ Analytics <small>stats, overview & performance</small>
 
 <div class="d-flex align-items-center mb-2">
 <div class="flex-fill font-weight-600 fs-16px">Total Packages</div>
-<a href="#">View report</a>
+<!--  <a href="#">View report</a> -->
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
@@ -505,19 +505,19 @@ Analytics <small>stats, overview & performance</small>
 		}
 	?>
 </div>
-<small class="fw-400 ml-auto text-danger">-2.5%</small>
+<!-- <small class="fw-400 ml-auto text-danger">-2.5%</small> -->
 </div>
 
-<div class="row mb-4">
+<!-- <div class="row mb-4">
 <div class="col-6">Tax</div>
 <div class="col-3 text-center">300</div>
 <div class="col-3 text-right">
 <span class="text-danger">-</span> 50%
 </div>
-</div>
+</div> -->
 
 <div>
-<div class="fs-13px font-weight-600 mb-3">SESSIONS OVER TIME</div>
+<div class="fs-13px font-weight-600 mb-3">PACKAGES OVER TIME</div>
 <div class="chart mb-2">
 <canvas id="chart2" width="100%" height="190px"></canvas>
 </div>
@@ -532,7 +532,7 @@ Analytics <small>stats, overview & performance</small>
 </div>
 
 
-<div class="card">
+<!-- <div class="card">
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-3">
@@ -567,7 +567,7 @@ Analytics <small>stats, overview & performance</small>
 </div>
 </div>
 </div>
-</div>
+</div> -->
 
 
 <div class="card">
@@ -593,7 +593,7 @@ Analytics <small>stats, overview & performance</small>
 		}
 	?>
 </div>
-<small class="fw-400 ml-auto text-danger">-7%</small>
+<!-- <small class="fw-400 ml-auto text-danger">-7%</small> -->
 </div>
 
 <div>
@@ -603,9 +603,9 @@ Analytics <small>stats, overview & performance</small>
 </div>
 <div class="d-flex align-items-center">
 <i class="fa fa-square text-indigo mr-2 ml-auto"></i>
-<span class="fs-12px mr-4">First-time</span>
+<!-- <span class="fs-12px mr-4">First-time</span> -->
 <i class="fa fa-square text-teal mr-2"></i>
-<span class="fs-12px">Returning</span>
+<!-- <span class="fs-12px">Returning</span> -->
 </div>
 </div>
 </div>
@@ -616,40 +616,88 @@ Analytics <small>stats, overview & performance</small>
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-2">
-<div class="flex-fill font-weight-600 fs-16px">Conversion rate</div>
-<a href="#">View report</a>
+<div class="flex-fill font-weight-600 fs-16px">Total Users</div>
+<!-- <a href="#">View report</a> -->
 </div>
 
+
+
 <div class="d-flex align-items-center mb-4 h3">
-<div>5.29%</div>
-<small class="fw-400 ml-auto text-success">+83%</small>
+<div><?php
+		$sqlTotalUser = "SELECT count(u.u_id) total_users from user u where u.role <> 'admin' ";
+		$TotalUserresult = mysqli_query($conn,$sqlTotalUser);
+		$TotalUserData = mysqli_fetch_array($TotalUserresult);
+		$TotalUsercount = mysqli_num_rows($TotalUserresult);
+		if($TotalUsercount>0){
+			echo 'No: '.$TotalUserData['total_users'];
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?></div>
+<!-- <small class="fw-400 ml-auto text-success">+83%</small> -->
 </div>
 
 <div>
-<div class="fs-13px font-weight-600 mb-3">CONVERSION FUNNEL</div>
+<div class="fs-13px font-weight-600 mb-3">Users according to role</div>
 <div class="row mb-2">
 <div class="col-6">
-<div>Order placed</div>
-<div class="text-gray-700 fs-13px">50 orders</div>
+<div>Admin</div>
+<div class="text-gray-700 fs-13px">
+<?php
+		$sqlTotalUser1 = "SELECT count(u.u_id) total_users from user u where u.role = 'admin' ";
+		$TotalUserresult1 = mysqli_query($conn,$sqlTotalUser1);
+		$TotalUserData1 = mysqli_fetch_array($TotalUserresult1);
+		$TotalUsercount1 = mysqli_num_rows($TotalUserresult1);
+		if($TotalUsercount1>0){
+			echo $TotalUserData1['total_users'].' admins';
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?>
 </div>
-<div class="col-3 text-center">25.28%</div>
-<div class="col-3 text-center"><span class="text-danger">-</span> 5%</div>
+</div>
+<!-- <div class="col-3 text-center">25.28%</div>
+<div class="col-3 text-center"><span class="text-danger">-</span> 5%</div> -->
 </div>
 <div class="row mb-2">
 <div class="col-6">
-<div>Reached orders</div>
-<div class="text-gray-700 fs-13px">8 orders</div>
+<div>Receiver</div>
+<div class="text-gray-700 fs-13px">
+<?php
+		$sqlTotalUser2 = "SELECT count(u.u_id) total_users from user u where u.role = 'receiver' ";
+		$TotalUserresult2 = mysqli_query($conn,$sqlTotalUser2);
+		$TotalUserData2 = mysqli_fetch_array($TotalUserresult2);
+		$TotalUsercount2 = mysqli_num_rows($TotalUserresult2);
+		if($TotalUsercount2>0){
+			echo $TotalUserData2['total_users'].' receivers';
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?>
 </div>
-<div class="col-3 text-center">15.28%</div>
-<div class="col-3 text-center"><span class="text-success">+</span> 82%</div>
+</div>
+<!-- <div class="col-3 text-center">15.28%</div>
+<div class="col-3 text-center"><span class="text-success">+</span> 82%</div> -->
 </div>
 <div class="row">
 <div class="col-6">
-<div>Sessions converted</div>
-<div class="text-gray-700 fs-13px">3 orders</div>
+<div>Sender</div>
+<div class="text-gray-700 fs-13px">
+<?php
+		$sqlTotalUser3 = "SELECT count(u.u_id) total_users from user u where u.role = 'sender' ";
+		$TotalUserresult3 = mysqli_query($conn,$sqlTotalUser3);
+		$TotalUserData3 = mysqli_fetch_array($TotalUserresult3);
+		$TotalUsercount3 = mysqli_num_rows($TotalUserresult3);
+		if($TotalUsercount3>0){
+			echo $TotalUserData3['total_users'].' senders';
+		}else{
+			echo 'No Data Found or been compromised';
+		}
+	?>
 </div>
-<div class="col-3 text-center">5.28%</div>
-<div class="col-3 text-center"><span class="text-success">+</span> 82%</div>
+</div>
+<!-- <div class="col-3 text-center">5.28%</div>
+<div class="col-3 text-center"><span class="text-success">+</span> 82%</div> -->
 </div>
 </div>
 </div>
@@ -659,8 +707,8 @@ Analytics <small>stats, overview & performance</small>
 <div class="card">
 <div class="card-body">
 
-<div class="d-flex align-items-center mb-2">
-<div class="flex-fill font-weight-600 fs-16px">Average order value</div>
+<div class="d-flex align-items-center mb-5">
+<div class="flex-fill font-weight-600 fs-16px">Average Order Value</div>
 </div>
 
 <div class="d-flex align-items-center mb-4 h3">
@@ -677,7 +725,7 @@ Analytics <small>stats, overview & performance</small>
 		}
 	?>
 </div>
-<small class="fw-400 ml-auto text-danger">-3.2%</small>
+<!-- <small class="fw-400 ml-auto text-danger">-3.2%</small> -->
 </div>
 
 <div>
@@ -698,11 +746,11 @@ Analytics <small>stats, overview & performance</small>
 <div class="card">
 <div class="card-body">
 
-<div class="d-flex align-items-center mb-2">
-<div class="flex-fill font-weight-600 fs-16px">Total orders</div>
+<div class="d-flex align-items-center mb-1">
+<div class="flex-fill font-weight-600 fs-16px">Total Orders</div>
 </div>
 
-<div class="d-flex align-items-center mb-4 h3">
+<div class="d-flex align-items-center mb-1 h3">
 <div>
 	<?php
 		$sqlTotalOrder = "SELECT Count(p_id) pkgCount from package";
@@ -716,11 +764,11 @@ Analytics <small>stats, overview & performance</small>
 		}		
 	?>
 </div>
-<small class="fw-400 ml-auto text-success">+57%</small>
+<!-- <small class="fw-400 ml-auto text-success">+57%</small> -->
 </div>
 
 <div>
-<div class="fs-13px font-weight-600 mb-3">ORDERS OVER TIME</div>
+<div class="fs-13px font-weight-600 mb-1">ORDERS OVER TIME</div>
 <div class="chart mb-2">
 <canvas id="chart5" width="100%" height="190px"></canvas>
 </div>
@@ -739,7 +787,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-3">
-<div class="flex-fill font-weight-600 fs-16px">Top products by customers</div>
+<div class="flex-fill font-weight-600 fs-16px">Package Status</div>
 </div>
 <?php
 	$sqlGroupStatus = "select count(p.p_id) r_cnt,s.status sts from package p, p_status s where s.p_id = p.p_id group by s.status ";
@@ -766,7 +814,7 @@ Analytics <small>stats, overview & performance</small>
 </div>
 
 
-<div class="card mt-5">
+<!-- <div class="card mt-5">
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-3">
@@ -796,10 +844,10 @@ Analytics <small>stats, overview & performance</small>
 <div class="col-3 text-center"><span class="text-success">+</span> 8.9%</div>
 </div>
 </div>
-</div>
+</div> -->
 
 
-<div class="card">
+<!-- <div class="card">
 <div class="card-body">
 
 <div class="d-flex align-items-center mb-3">
@@ -814,6 +862,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="col-3 text-center">247</div>
 <div class="col-3 text-center"><span class="text-success">+</span> 4.2%</div>
 </div>
+
 <div class="row mb-2">
 <div class="col-6">
 <div>Twitter</div>
@@ -821,6 +870,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="col-3 text-center">153</div>
 <div class="col-3 text-center"><span class="text-success">+</span> 8.2%</div>
 </div>
+
 <div class="row mb-2">
 <div class="col-6">
 <div>Instagram</div>
@@ -828,6 +878,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="col-3 text-center">98</div>
 <div class="col-3 text-center"><span class="text-danger">-</span> 3.4%</div>
 </div>
+
 <div class="row mb-2">
 <div class="col-6">
 <div>Pinterest</div>
@@ -835,6 +886,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="col-3 text-center">75</div>
 <div class="col-3 text-center"><span class="text-success">+</span> 1.9%</div>
 </div>
+
 <div class="row">
 <div class="col-6">
 <div>Dribbble</div>
@@ -843,7 +895,7 @@ Analytics <small>stats, overview & performance</small>
 <div class="col-3 text-center"><span class="text-success">+</span> 2.1%</div>
 </div>
 </div>
-</div>
+</div> -->
 
 </div>
 
