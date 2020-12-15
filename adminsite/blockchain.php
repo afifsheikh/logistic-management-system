@@ -713,7 +713,7 @@ public function isValid()
 			$hash_valForBC = hash('ripemd160', $stringForBlockchain);
 			$testCoin = new BlockChain();
 			$testCoin->push(new Block($countForBC, strtotime("now"), $hash_valForBC));
-			echo $testCoin->chain[$countForBC]->data."<br>";
+			echo 'Chain :'.$testCoin->chain[$countForBC]->data."<br>";
 			$countForBC++;
 
 		}
